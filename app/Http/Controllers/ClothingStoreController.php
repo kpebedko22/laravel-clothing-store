@@ -3,83 +3,71 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cart;
-use App\Models\CartClothes;
+use App\Models\CartProduct;
 use App\Models\Category;
-use App\Models\Clothes;
-use App\Models\ClothesOrder;
 use App\Models\Color;
+use App\Models\Order;
+use App\Models\Product;
 use App\Models\Size;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class ClothingStoreController extends Controller
 {
     // Главная
-    public function index()
+    public function index(): View
     {
-        return view(
-            'index',
-            [
-                'numCartItems' => Cart::all()->last()->totalItems
-            ]
-        );
+        return view('index', [
+            'numCartItems' => 0
+        ]);
     }
 
     // Каталог товаров
-    public function catalog()
+    public function catalog(): View
     {
-        return view(
-            'catalog',
-            [
-                'items' => Clothes::all(),
-                'numCartItems' => Cart::all()->last()->totalItems
-            ]
-        );
+        return view('catalog', [
+            'items' => Product::all(),
+            'numCartItems' => 0
+        ]);
     }
 
     // Администрование товаров
-    public function products_administration()
+    public function products_administration(): View
     {
-        return view(
-            'products-administration',
-            [
-                'items' => Clothes::all(),
-                'numCartItems' => Cart::all()->last()->totalItems
-            ]
-        );
+        return view('products-administration', [
+            'items' => Product::all(),
+            'numCartItems' => 0
+        ]);
     }
 
     // Страница просмотра товара
-    public function single_product($id)
+    public function single_product($id): View
     {
-        return view(
-            'single-product',
-            [
-                'singleItem' => Clothes::find($id),
-                'numCartItems' => Cart::all()->last()->totalItems
-            ]
-        );
+        return view('single-product', [
+            'singleItem' => Product::find($id),
+            'numCartItems' => 0
+        ]);
     }
 
     // Рендеринг формы для добавления товара в БД
-    public function createItem()
+    public function createItem(): View
     {
-        return view(
-            'product-editing',
-            [
-                'item' => new Clothes(),
-                'categories' => Category::all(),
-                'sizes' => Size::all(),
-                'colors' => Color::all(),
-                'numCartItems' => Cart::all()->last()->totalItems
-            ]
-        );
+        return view('product-editing', [
+            'item' => new Product(),
+            'categories' => Category::all(),
+            'sizes' => Size::all(),
+            'colors' => Color::all(),
+            'numCartItems' => 0
+        ]);
     }
 
     // Добавления товара в БД
-    public function addItemToDB(Request $req)
+    public function addItemToDB(Request $req): JsonResponse
     {
         $data = $req->all();
-        $item = new Clothes($data);
+        $item = new Product($data);
 
         if ($req->file('imagePath')) {
             $imagePath = $req->file('imagePath')->store('uploads', 'public');
@@ -107,54 +95,56 @@ class ClothingStoreController extends Controller
     }
 
     // Удалить товар из БД
-    public function deleteItemFromDB($id)
+    public function deleteItemFromDB($id): RedirectResponse
     {
-        $item = Clothes::find($id);
+        $item = Product::find($id);
 
-        if ($item)
+        if ($item) {
             $item->delete();
+        }
 
         return redirect()->route('items.list');
     }
 
-    public function deleteItemFromDBResponse(Request $req)
+    public function deleteItemFromDBResponse(Request $req): JsonResponse
     {
-        $item = Clothes::find($req->get("id"));
+        $item = Product::find($req->get("id"));
+
         if ($item) {
             $item->delete();
+
             return response()->json([
                 'name' => 'Успешно удалено!',
                 'status' => '1'
             ]);
-        } else
+        } else {
             return response()->json([
                 'name' => 'Ошибка удаления!',
                 'status' => '0'
             ]);
+        }
     }
 
     // Рендеринг формы для редактирования товара
-    public function editItem($id)
+    public function editItem($id): View
     {
-        return view(
-            'product-editing',
-            [
-                'item' => Clothes::find($id),
-                'categories' => Category::all(),
-                'sizes' => Size::all(),
-                'colors' => Color::all(),
-                'numCartItems' => Cart::all()->last()->totalItems
-            ]
-        );
+        return view('product-editing', [
+            'item' => Product::find($id),
+            'categories' => Category::all(),
+            'sizes' => Size::all(),
+            'colors' => Color::all(),
+            'numCartItems' => 0
+        ]);
     }
 
     // Сохранение редактирования товара
-    public function updateItem(Request $req, $id)
+    public function updateItem(Request $req, $id): RedirectResponse
     {
-        $item = Clothes::find($id);
+        $item = Product::find($id);
 
-        if (empty($item))
+        if (empty($item)) {
             return back()->withErrors(['msg' => "Ошибка, запись не найдена"])->withInput();
+        }
 
         $data = $req->all();
         $result = $item->fill($data);
@@ -166,16 +156,16 @@ class ClothingStoreController extends Controller
 
         $result->save();
 
-        if ($result)
-            return redirect()->route('items.list');
-        else
-            return back()->withErrors(['msg' => "Ошибка, запись не была изменена"])->withInput();
+        return $result
+            ? redirect()->route('items.list')
+            : back()->withErrors(['msg' => "Ошибка, запись не была изменена"])->withInput();
     }
 
     // Корзина (оформление заказа)
     public function cart()
     {
         $numCarts = Cart::all()->count();
+
         if ($numCarts < 1) {
             $newCart = new Cart(['totalItems' => 0, 'totalPrice' => 0]);
             $newCart->save();
@@ -183,20 +173,18 @@ class ClothingStoreController extends Controller
 
         $curCart = Cart::all()->last();
 
-        $clothesIDs = CartClothes::where('PK_Cart', $curCart->id)->get();
+        $clothesIDs = CartProduct::where('PK_Cart', $curCart->id)->get();
 
-        $cartItems = array();
+        $cartItems = [];
+
         foreach ($clothesIDs as $clothesID) {
-            $cartItems[] = Clothes::find($clothesID->PK_Clothes);
+            $cartItems[] = Product::find($clothesID->PK_Clothes);
         }
 
-        return view(
-            'cart',
-            [
-                'cartItems' => $cartItems,
-                'cart' => $curCart
-            ]
-        );
+        return view('cart', [
+            'cartItems' => $cartItems,
+            'cart' => $curCart
+        ]);
     }
 
     public function addItemToCart($id)
@@ -210,14 +198,14 @@ class ClothingStoreController extends Controller
 
         $curCart = Cart::all()->last();
 
-        $allClothesToCart = CartClothes::where(['PK_Cart' => $curCart->id, 'PK_Clothes' => $id])->get();
+        $allClothesToCart = CartProduct::where(['PK_Cart' => $curCart->id, 'PK_Clothes' => $id])->get();
 
         if (count($allClothesToCart) < 1) {
 
-            $newCartClothes = new CartClothes(['PK_Cart' => $curCart->id, 'PK_Clothes' => $id]);
+            $newCartClothes = new CartProduct(['PK_Cart' => $curCart->id, 'PK_Clothes' => $id]);
             $newCartClothes->save();
 
-            $curClothes = Clothes::find($id);
+            $curClothes = Product::find($id);
 
             $curCart->totalItems += 1;
             $curCart->totalPrice += $curClothes->price;
@@ -225,17 +213,16 @@ class ClothingStoreController extends Controller
         }
 
         return redirect()->route('cart');
-        //return redirect()->route('cart-preview');
     }
 
     public function deleteItemFromCart($id)
     {
         $cart = Cart::all()->last();
 
-        CartClothes::where(['PK_Cart' => $cart->id, 'PK_Clothes' => $id])->delete();
+        CartProduct::where(['PK_Cart' => $cart->id, 'PK_Clothes' => $id])->delete();
 
         $cart->totalItems -= 1;
-        $cart->totalPrice -= Clothes::find($id)->price;
+        $cart->totalPrice -= Product::find($id)->price;
         $cart->save();
 
         return redirect()->route('cart');
@@ -244,7 +231,7 @@ class ClothingStoreController extends Controller
     public function createOrder(Request $req)
     {
         $data = $req->all();
-        $order = new ClothesOrder($data);
+        $order = new Order($data);
 
         $order->save();
 
@@ -268,11 +255,11 @@ class ClothingStoreController extends Controller
 
         $curCart = Cart::all()->last();
 
-        $clothesIDs = CartClothes::where('PK_Cart', $curCart->id)->get();
+        $clothesIDs = CartProduct::where('PK_Cart', $curCart->id)->get();
 
         $cartItems = array();
         foreach ($clothesIDs as $clothesID) {
-            $cartItems[] = Clothes::find($clothesID->PK_Clothes);
+            $cartItems[] = Product::find($clothesID->PK_Clothes);
         }
 
         $myList = array();
@@ -303,7 +290,7 @@ class ClothingStoreController extends Controller
 
     public function previewItem($id)
     {
-        $item = Clothes::find($id);
+        $item = Product::find($id);
 
         if ($item) {
             return response()->json([
@@ -314,10 +301,11 @@ class ClothingStoreController extends Controller
                 'category' => $item->Category->categoryName,
                 'price' => $item->price
             ]);
-        } else
+        } else {
             return response()->json([
                 'status' => '0',
                 'info' => 'Ошибка загрузки инофрмации о товаре',
             ]);
+        }
     }
 }

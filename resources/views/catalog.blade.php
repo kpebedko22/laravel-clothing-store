@@ -19,14 +19,14 @@
                 <div class="catalog__item">
                     <a href="single-product-{{$item->id}}">
                         @if ($item->imagePath)
-                        <img src="{{asset('/storage/'.$item->imagePath)}}" class="catalog__item-img" alt="{{$item->clothesName}}">
+                        <img src="{{asset('/storage/'.$item->imagePath)}}" class="catalog__item-img" alt="{{$item->name}}">
                         @else
                         <img src="img/empty.png" class="catalog__item-img" alt="empty">
                         @endif
                     </a>
                     <a href="single-product-{{$item->id}}">
                         <div class="catalog__item-info">
-                            <div class="catalog__item-info-name">{{$item->clothesName}}</div>
+                            <div class="catalog__item-info-name">{{$item->name}}</div>
                             <div class="catalog__item-info-price">{{$item->price}}&#8381;</div>
                         </div>
                     </a>
