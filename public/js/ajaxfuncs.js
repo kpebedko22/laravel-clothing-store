@@ -1,34 +1,5 @@
 $(document).ready(function () {
 
-    // Превью товара
-    $(".btn-item-preview").click(function (e) {
-        e.preventDefault();
-
-        id_item = $(this).data("iditem");
-
-        $.ajax({
-            type: "GET",
-            url: "/preview-item-" + id_item,
-            success: function (data) {
-                if (data.status === '1') {
-                    $('#clothesName').text("Наименование: " + data.clothesName);
-                    $('#color').text("Цвет: " + data.color);
-                    $('#size').text("Размер: " + data.size);
-                    $('#category').text("Категория: " + data.category);
-                    $('#price').text("Цена: " + data.price);
-
-                    $('#previewItem').modal("show");
-                }
-                else {
-                    alert("Ошибка: " + data.message);
-                }
-            },
-            error: function (msg) {
-                alert(msg.responseJSON.message);
-                console.log(msg);
-            },
-        });
-    });
 
     // Добавление нового товара в БД
     $("#formAdd").submit(function (e) {

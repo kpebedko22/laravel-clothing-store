@@ -9,13 +9,39 @@ return new class extends Migration {
     {
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('parent_id')
+                ->nullable()
+                ->references('id')
+                ->on('categories')
+                ->nullOnDelete()
+                ->cascadeOnUpdate();
+            $table->foreignId('root_category_id')
+                ->nullable()
+                ->references('id')
+                ->on('categories')
+                ->nullOnDelete()
+                ->cascadeOnUpdate();
+
+            $table->unsignedInteger('_lft');
+            $table->unsignedInteger('_rgt');
+
             $table->string('name');
+            $table->string('slug')->unique();
+            $table->text('path');
+            $table->json('breadcrumbs');
             $table->timestamps();
+
+            $table->index(['_lft', '_rgt', 'parent_id']);
         });
     }
 
     public function down(): void
     {
+        Schema::table('categories', function (Blueprint $table) {
+            $table->dropForeign(['root_category_id']);
+            $table->dropForeign(['parent_id']);
+        });
+
         Schema::dropIfExists('categories');
     }
 };

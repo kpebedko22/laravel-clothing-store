@@ -2,7 +2,7 @@
 <footer>
     <div class="container">
         <div class="row pt-4 pb-2 justify-content-between">
-            <div class="col-2"> <img src="img/logo_new.png" alt="logo-store" /> </div>
+            <div class="col-2"> <img src="{{ asset('img/logo_new.png') }}" alt="logo-store" /> </div>
             <div class="col-5">
                 <div class="nav justify-content-end">
                     <a href="#" class="btn btn-default btn-lg nav-link">

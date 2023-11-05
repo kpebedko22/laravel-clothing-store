@@ -27,6 +27,7 @@ return new class extends Migration {
                 ->cascadeOnUpdate();
 
             $table->string('name');
+            $table->string('slug')->unique();
             $table->text('desc')->nullable();
             $table->unsignedBigInteger('price');
 

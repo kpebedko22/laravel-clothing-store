@@ -8,6 +8,7 @@ use App\Models\Color;
 use App\Models\Product;
 use App\Models\Size;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Factories\Sequence;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -16,13 +17,44 @@ class DatabaseSeeder extends Seeder
     {
         $colors = Color::factory()->count(10)->create();
         $sizes = Size::factory()->count(10)->create();
-        $categories = Category::factory()->count(10)->create();
+
+        $allCategories = collect();
+
+        $categories = Category::factory()
+            ->count(5)
+            ->state(new Sequence(
+                ['name' => 'Женщины'],
+                ['name' => 'Мужчины'],
+                ['name' => 'Девочки'],
+                ['name' => 'Мальчики'],
+                ['name' => 'Аксессуары'],
+            ))
+            ->create()
+            ->each(function (Category $category) use (&$allCategories) {
+                $category->children()
+                    ->saveMany(
+                        $categories = Category::factory()
+                            ->count(rand(1, 3))
+                            ->create()
+                    )
+                    ->each(function (Category $category) use (&$allCategories) {
+                        $category->children()->saveMany(
+                            $categories = Category::factory()
+                                ->count(rand(1, 3))
+                                ->create()
+                        );
+
+                        $allCategories->push($categories);
+                    });
+
+                $allCategories->push($categories);
+            });
 
         $products = Product::factory()
-            ->count(30)
+            ->count(100)
             ->recycle($colors)
             ->recycle($sizes)
-            ->recycle($categories)
+            ->recycle($allCategories)
             ->create();
 
         User::factory(10)->create();

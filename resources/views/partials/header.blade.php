@@ -1,29 +1,46 @@
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
     <div class="container">
-        <a class="navbar-brand" href="/">
-            <img src="img/logo_new.png" alt="store-logo">
+        <a class="navbar-brand" href="{{ route('web.index') }}">
+            <img src="{{ asset('img/logo_new.png') }}" alt="store-logo">
         </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler"
+                type="button"
+                data-toggle="collapse"
+                data-target="#navbarNav"
+                aria-controls="navbarNav"
+                aria-expanded="false"
+                aria-label="Toggle navigation"
+        >
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav mx-auto">
-                <li class="nav-item @if ($_SERVER['REQUEST_URI'] == '/') active @endif">
-                    <a class="nav-link" href="/">Главная</a>
-                </li>
-                <li class="nav-item @if ($_SERVER['REQUEST_URI'] == '/catalog') active @endif">
-                    <a class="nav-link" href="catalog">Каталог</a>
-                </li>
-                <li class="nav-item @if ($_SERVER['REQUEST_URI'] == '/products-administration') active @endif">
-                    <a class="nav-link" href="products-administration">Администрирование товаров</a>
-                </li>
+        <div class="collapse navbar-collapse flex" id="navbarNav" style="justify-content: space-between">
+            <ul class="navbar-nav">
+                @foreach($navigationCategories as $category)
+                    <li class="nav-item {{ request()->is($category->id) ? 'active' : '' }}">
+                        <a class="nav-link"
+                           href="{{ route('web.catalog.category', $category->path) }}"
+                        >
+                            {{ $category->name }}
+                        </a>
+                    </li>
+                @endforeach
+{{--                <li class="nav-item @if ($_SERVER['REQUEST_URI'] == '/') active @endif">--}}
+{{--                    <a class="nav-link" href="{{ route('web.index') }}">Главная</a>--}}
+{{--                </li>--}}
+{{--                <li class="nav-item @if ($_SERVER['REQUEST_URI'] == '/catalog') active @endif">--}}
+{{--                    <a class="nav-link" href="{{ route('web.catalog.index') }}">Каталог</a>--}}
+{{--                </li>--}}
             </ul>
             <div class="nav-shopping-bag">
-                <a class="nav-link btn-preview" href="cart" data-bs-toggle="modal" data-bs-target="#previewCart">
+                <a class="nav-link btn-preview"
+                   href="cart"
+                   data-bs-toggle="modal"
+                   data-bs-target="#previewCart"
+                >
                     <i class="fa fa-shopping-cart fa-fw"></i>
                     <span class="hover">Корзина (</span>
-                    <span class="nav-shopping-bag__num-items">{{$numCartItems}}</span>
+                    <span class="nav-shopping-bag__num-items">{{$numCartItems ?? 0}}</span>
                     <span class="hover">)</span>
                 </a>
             </div>
