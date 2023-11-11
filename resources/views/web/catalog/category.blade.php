@@ -7,9 +7,13 @@
 
     <div class="grid grid-cols-4 gap-4">
         @foreach($childCategories as $childCategory)
-            <div class="">
+            <div class="border rounded-lg">
                 <a href="{{ route('web.catalog.category', $childCategory->path) }}">
-                    <div class="">
+                    <div class="p-3">
+                        <img src="{{ $childCategory->getFirstMediaUrl() }}"
+                             class="w-full "
+                             alt="{{ $childCategory->name }}"
+                        >
                         <h4>{{ $childCategory->name }}</h4>
                     </div>
                 </a>
@@ -17,7 +21,7 @@
         @endforeach
     </div>
 
-    <div class="grid grid-cols-4 gap-4">
+    <div class="mt-5 grid grid-cols-4 gap-4">
         @foreach ($products as $product)
             <x-web.catalog.product-card :product="$product"/>
         @endforeach

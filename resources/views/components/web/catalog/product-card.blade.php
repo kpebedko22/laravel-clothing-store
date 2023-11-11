@@ -1,10 +1,13 @@
 <div class="">
     <div class="border rounded-lg bg-white shadow-lg">
-        <a href="{{ route('web.products.show', $product->slug) }}">
-            <img src="{{ asset($product->imagePath ? '/storage/' . $product->imagePath : 'img/empty.png') }}"
-                 class="catalog__item-img"
+        <a href="{{ route('web.products.show', $product->slug) }}"
+           class="flex p-2"
+        >
+            <img src="{{ $product->getFirstMediaUrl() }}"
+                 class="w-full "
                  alt="{{ $product->name }}"
             >
+            {{--            {{ $product->media->first()?->lazy() }}--}}
         </a>
 
         <div class="p-3">

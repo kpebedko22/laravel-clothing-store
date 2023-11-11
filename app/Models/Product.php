@@ -10,6 +10,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Carbon;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
@@ -39,10 +41,11 @@ use Spatie\Sluggable\SlugOptions;
  *
  * @mixin Eloquent
  */
-class Product extends Model
+class Product extends Model implements HasMedia
 {
     use HasFactory,
-        HasSlug;
+        HasSlug,
+        InteractsWithMedia;
 
     protected $guarded = ['id'];
 
@@ -73,5 +76,13 @@ class Product extends Model
         return SlugOptions::create()
             ->generateSlugsFrom('name')
             ->saveSlugsTo('slug');
+    }
+
+    public function registerMediaCollections(): void
+    {
+        $this
+            ->addMediaCollection('default')
+            ->useFallbackUrl('/img/products/placeholder.svg')
+            ->useFallbackPath(public_path('/img/products/placeholder.svg'));
     }
 }

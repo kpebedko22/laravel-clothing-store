@@ -5,10 +5,20 @@ namespace App\Repositories;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 
 final class ProductRepository
 {
+    protected function defaultQuery(): Builder|Product
+    {
+        return Product::query()
+            ->with([
+                'media',
+                'category',
+            ]);
+    }
+
     public function show(string $slug): Product
     {
         return Product::query()
@@ -18,10 +28,7 @@ final class ProductRepository
 
     public function forIndex(): Collection
     {
-        return Product::query()
-            ->with([
-                'category',
-            ])
+        return $this->defaultQuery()
             ->inRandomOrder()
             ->limit(4)
             ->get();
@@ -29,10 +36,7 @@ final class ProductRepository
 
     public function forCatalog(): LengthAwarePaginator
     {
-        return Product::query()
-            ->with([
-                'category',
-            ])
+        return $this->defaultQuery()
             ->paginate();
     }
 
@@ -41,10 +45,7 @@ final class ProductRepository
         $categories = $category->descendants()->pluck('id')->toArray();
         $categories[] = $category->id;
 
-        return Product::query()
-            ->with([
-                'category',
-            ])
+        return $this->defaultQuery()
             ->whereIntegerInRaw('category_id', $categories)
             ->get();
     }

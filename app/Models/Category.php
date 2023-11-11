@@ -13,6 +13,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
 use Kalnoy\Nestedset\NodeTrait;
 use Kalnoy\Nestedset\QueryBuilder;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
@@ -45,11 +47,12 @@ use Spatie\Sluggable\SlugOptions;
  * @method static QueryBuilder|Category descendantsOf($id, array $columns = [], $andSelf = false)
  * @mixin Eloquent
  */
-class Category extends Model
+class Category extends Model implements HasMedia
 {
     use HasFactory,
         NodeTrait,
-        HasSlug;
+        HasSlug,
+        InteractsWithMedia;
 
     protected $guarded = ['id'];
 
@@ -143,5 +146,13 @@ class Category extends Model
         foreach ($descendants as $model) {
             $model->generatePath()->save();
         }
+    }
+
+    public function registerMediaCollections(): void
+    {
+        $this
+            ->addMediaCollection('default')
+            ->useFallbackUrl('/img/categories/placeholder.svg')
+            ->useFallbackPath(public_path('/img/categories/placeholder.svg'));
     }
 }
