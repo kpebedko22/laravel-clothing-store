@@ -1,68 +1,50 @@
 @extends('layouts.app')
 
-@section('title', $product->clothesName)
+@section('title', $product->name)
 
 @section('content')
+    {{ Breadcrumbs::render('product', $product) }}
 
-    <div class="container">
+    <div class="grid grid-cols-2 gap-4">
 
-        {{ Breadcrumbs::render('product', $product) }}
+        <div class="">
+            <img src="{{ $product->getFirstMediaUrl() }}"
+                 class="w-full"
+                 alt="{{ $product->name }}"
+            >
+        </div>
 
-{{--        <nav>--}}
-{{--            <ol class="breadcrumb bg-transparent">--}}
-{{--                <li class="breadcrumb-item">--}}
-{{--                    <a href="{{ route('web.catalog.index') }}">Каталог</a>--}}
-{{--                </li>--}}
-{{--                <li class="breadcrumb-item active" aria-current="page">{{ $product->name }}</li>--}}
-{{--            </ol>--}}
-{{--        </nav>--}}
-    </div>
+        <div class="">
+            <h1 class="text-2xl">{{ $product->name }}</h1>
 
-    <section class="single-product">
-        <div class="single-product__item">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-7">
-                        <div class="single-product__item-img">
-                            <img class="img-fluid"
-                                 src="{{ asset($product->imagePath ? '/storage/' . $product->imagePath : 'img/empty.png') }}"
-                                 alt="{{$product->name}}"
-                            >
-                        </div>
-                    </div>
-                    <div class="col-md-5">
-                        <div class="single-product__item-info">
-                            <div class="single-product__item-info-name">{{ $product->name }}</div>
-                            <div class="single-product__item-info-price">{{ $product->price }}&#8381;</div>
+            <div class="text-4xl">{{ $product->human_price . ' ₽' }}</div>
 
-                            <div class="single-product__item-info-details">
-                                <div class="single-product__item-info-details-label">
-                                    <span class="single-product__item-info-details-label-text">Размер: </span>
-                                </div>
-                                <div class="single-product__item-info-details-size-value">{{ $product->size->name }}</div>
-                            </div>
-                            <div class="single-product__item-info-details">
-                                <div class="single-product__item-info-details-label">
-                                    <span class="single-product__item-info-details-label-text">Цвет: </span>
-                                </div>
-                                <div
-                                    class="single-product__item-info-details-color-value">{{ $product->color->name }}</div>
-                            </div>
-                        </div>
-                        <a href="add-item-to-cart-{{ $product->id }}"
-                           class="btn btn-block btn-outline-none single-product__item-btn-add-to-cart">
-                            <i class="fa fa-shopping-cart fa-fw"></i>
-                            <span>Добавить в корзину</span>
-                        </a>
-                        <div class="single-product__item-description">
-                            <h4>ОПИСАНИЕ</h4>
-                            <div class="single-product__item-description-text">
-                                <?php echo nl2br($product->desc) ?>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div class="">
+                <span class="uppercase">{{ 'Цвет:' }}</span>
+                <span>{{ $product->color->name }}</span>
+            </div>
+
+            <div class="">
+                <span class="uppercase">{{ 'Размер:' }}</span>
+                <span>{{ $product->size->name }}</span>
+            </div>
+
+            <div class="flex gap-3">
+                <button class="flex items-center justify-center gap-2 w-full bg-light p-5 uppercase">
+                    <x-heroicon-o-shopping-bag class="w-6 h-6"/>
+                    {{ 'Добавить в корзину' }}
+                </button>
+
+                <livewire:web.catalog.product-card-favorite-toggle :productId="$product->id"
+                                                                   :isFavorite="false"
+                />
+            </div>
+
+            <div class="">
+                <span class="uppercase">{{ 'Описание:' }}</span>
+                <div>{{ $product->desc }}</div>
             </div>
         </div>
-    </section>
+
+    </div>
 @endsection

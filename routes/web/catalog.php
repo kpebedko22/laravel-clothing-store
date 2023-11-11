@@ -9,7 +9,7 @@ Route::prefix('catalog')
         Route::get('', 'index')
             ->name('index');
 
-        Route::get('{path}', 'category')
+        Route::get('{path}', 'index')
             ->where('path', '.*')
             ->name('category');
     });

@@ -30,15 +30,17 @@ final class ProductRepository
 
     public function forIndex(): Collection
     {
-        return $this->defaultQuery()
+        $items = $this->defaultQuery()
             ->inRandomOrder()
             ->limit(4)
             ->get();
+
+        return $this->wrapToProductCard($items);
     }
 
     public function forCatalog(): LengthAwarePaginator
     {
-        $paginator = $this->defaultQuery()->paginate();
+        $paginator = $this->defaultQuery()->paginate(16);
 
         $items = $this->wrapToProductCard(collect($paginator->items()));
 
@@ -47,18 +49,21 @@ final class ProductRepository
         return $paginator;
     }
 
-    public function forCategory(Category $category): Collection
+    public function forCategory(int $category): LengthAwarePaginator
     {
+        $category = Category::find($category);
         $categories = $category->descendants()->pluck('id')->toArray();
         $categories[] = $category->id;
 
-        $items = $this->defaultQuery()
+        $paginator = $this->defaultQuery()
             ->whereIntegerInRaw('category_id', $categories)
-            ->get();
+            ->paginate(16);
 
-        $items = $this->wrapToProductCard($items);
+        $items = $this->wrapToProductCard(collect($paginator->items()));
 
-        return $items;
+        $paginator->setCollection($items);
+
+        return $paginator;
     }
 
     protected function wrapToProductCard(Collection $products): Collection
@@ -66,7 +71,14 @@ final class ProductRepository
         return $products->map(function (Product $product) {
 
             return new ProductCardDTO(
-                $product,
+                $product->id,
+                $product->slug,
+                $product->name,
+                $product->desc,
+                $product->human_price,
+                $product->getFirstMediaUrl(),
+                $product->category->path,
+                $product->category->name,
                 FavoriteProductServiceFactory::service()->isFavorite($product->id),
             );
         });

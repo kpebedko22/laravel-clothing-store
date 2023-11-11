@@ -21,7 +21,7 @@ class FavoriteProductSessionService implements FavoriteProductServiceInterface
 
     public function count(): int
     {
-        return count(Session::get(self::getSessionKey()));
+        return count(Session::get(self::getSessionKey(), []));
     }
 
     public function toggle(): void

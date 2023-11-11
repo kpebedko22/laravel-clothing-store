@@ -3,9 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Category;
-use Illuminate\Database\Eloquent\Collection;
-
-//use Illuminate\Support\Collection;
+use Illuminate\Support\Collection;
 
 final class CategoryRepository
 {
