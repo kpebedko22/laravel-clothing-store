@@ -5,6 +5,7 @@ namespace App\Models;
 use Database\Factories\ProductFactory;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -29,6 +30,8 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read Color $color
  * @property-read Size $size
  *
+ * @property-read float $human_price
+ *
  * @method static ProductFactory factory($count = null, $state = [])
  * @method static Builder|Product newModelQuery()
  * @method static Builder|Product newQuery()
@@ -42,6 +45,13 @@ class Product extends Model
         HasSlug;
 
     protected $guarded = ['id'];
+
+    protected function humanPrice(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => $this->price / 100,
+        );
+    }
 
     public function size(): BelongsTo|Size
     {

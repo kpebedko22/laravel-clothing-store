@@ -16,6 +16,17 @@ final class ProductRepository
             ->firstOrFail();
     }
 
+    public function forIndex(): Collection
+    {
+        return Product::query()
+            ->with([
+                'category',
+            ])
+            ->inRandomOrder()
+            ->limit(4)
+            ->get();
+    }
+
     public function forCatalog(): LengthAwarePaginator
     {
         return Product::query()
@@ -34,7 +45,7 @@ final class ProductRepository
             ->with([
                 'category',
             ])
-            ->whereIn('category_id', $categories)
+            ->whereIntegerInRaw('category_id', $categories)
             ->get();
     }
 }

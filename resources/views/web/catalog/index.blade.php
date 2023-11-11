@@ -3,21 +3,23 @@
 @section('title', 'Каталог')
 
 @section('content')
-    <section class="catalog bg-light py-5">
-        <div class="container">
+    {{ Breadcrumbs::render('catalog') }}
 
-            {{ Breadcrumbs::render('catalog') }}
+    <div class="grid grid-cols-4 gap-4">
+        @foreach($childCategories as $childCategory)
+            <div class="border rounded-lg bg-gray-300">
+                <a href="{{ route('web.catalog.category', $childCategory->path) }}">
+                    <div class="">
+                        <h4>{{ $childCategory->name }}</h4>
+                    </div>
+                </a>
+            </div>
+        @endforeach
+    </div>
 
-            <div class="row mb-3">
-                <div class="col">
-                    <h3>Все товары</h3>
-                </div>
-            </div>
-            <div class="row">
-                @foreach ($items as $item)
-                    <x-web.catalog.product-card :item="$item"/>
-                @endforeach
-            </div>
-        </div>
-    </section>
+    <div class="grid grid-cols-4 gap-4">
+        @foreach ($products as $product)
+            <x-web.catalog.product-card :product="$product"/>
+        @endforeach
+    </div>
 @endsection

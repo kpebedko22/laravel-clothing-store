@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\Category;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\DB;
 
 //use Illuminate\Support\Collection;
 
@@ -17,6 +18,13 @@ final class CategoryRepository
     }
 
     public function getNavigationCategories(): Collection
+    {
+        return Category::query()
+            ->where(['parent_id' => null])
+            ->get();
+    }
+
+    public function childCategoriesForCatalog(): Collection
     {
         return Category::query()
             ->where(['parent_id' => null])

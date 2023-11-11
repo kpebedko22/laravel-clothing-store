@@ -27,11 +27,12 @@ return new class extends Migration {
 
             $table->string('name');
             $table->string('slug')->unique();
-            $table->text('path');
+            $table->string('path');
             $table->json('breadcrumbs');
             $table->timestamps();
 
             $table->index(['_lft', '_rgt', 'parent_id']);
+            $table->index(['path']);
         });
     }
 

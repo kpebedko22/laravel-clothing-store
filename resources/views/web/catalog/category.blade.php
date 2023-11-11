@@ -3,32 +3,23 @@
 @section('title', $category->name)
 
 @section('content')
-    <section class="catalog bg-light py-5">
-        <div class="container">
+    {{ Breadcrumbs::render('category', $category) }}
 
-            {{ Breadcrumbs::render('category', $category) }}
-
-            <div class="row mb-3">
-                <div class="col">
-                    <h3>{{ $category->name }}</h3>
-                </div>
-            </div>
-            <div class="row mb-3">
-                @foreach($childCategories as $childCategory)
-                    <div class="col-3">
-                        <a href="{{ route('web.catalog.category', $childCategory->path) }}">
-                            <div class="">
-                                <h4>{{ $childCategory->name }}</h4>
-                            </div>
-                        </a>
+    <div class="grid grid-cols-4 gap-4">
+        @foreach($childCategories as $childCategory)
+            <div class="">
+                <a href="{{ route('web.catalog.category', $childCategory->path) }}">
+                    <div class="">
+                        <h4>{{ $childCategory->name }}</h4>
                     </div>
-                @endforeach
+                </a>
             </div>
-            <div class="row">
-                @foreach ($products as $product)
-                    <x-web.catalog.product-card :item="$product"/>
-                @endforeach
-            </div>
-        </div>
-    </section>
+        @endforeach
+    </div>
+
+    <div class="grid grid-cols-4 gap-4">
+        @foreach ($products as $product)
+            <x-web.catalog.product-card :product="$product"/>
+        @endforeach
+    </div>
 @endsection

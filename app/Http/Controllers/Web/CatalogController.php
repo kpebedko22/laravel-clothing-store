@@ -19,8 +19,12 @@ class CatalogController extends Controller
 
     public function index(): View
     {
+        $childCategories = $this->categoryRepository->childCategoriesForCatalog();
+        $products = $this->productRepository->forCatalog();
+
         return view('web.catalog.index', [
-            'items' => $this->productRepository->forCatalog(),
+            'childCategories' => $childCategories,
+            'products' => $products,
         ]);
     }
 

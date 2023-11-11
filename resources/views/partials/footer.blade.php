@@ -1,41 +1,78 @@
-<!-- Footer -->
-<footer>
-    <div class="container">
-        <div class="row pt-4 pb-2 justify-content-between">
-            <div class="col-2"> <img src="{{ asset('img/logo_new.png') }}" alt="logo-store" /> </div>
-            <div class="col-5">
-                <div class="nav justify-content-end">
-                    <a href="#" class="btn btn-default btn-lg nav-link">
-                        <i class="fa fa-facebook fa-fw"></i>
-                        <span class="network-name">Facebook</span>
-                    </a>
-                    <a href="#" class="btn btn-default btn-lg nav-link">
-                        <i class="fa fa-twitter fa-fw"></i>
-                        <span class="network-name">Twitter</span>
-                    </a>
-                    <a href="#" class="btn btn-default btn-lg nav-link">
-                        <i class="fa fa-instagram fa-fw"></i>
-                        <span class="network-name">Instagram</span>
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-6">
-                <p>© ООО «VAV Clothing Store» 2021. Все права защищены.</p>
-                <p>Юридический адрес: ул. Пушкина, д. Колотушкина</p>
-                <p>Указанная стоимость товаров и условия их приобретения действительны по состоянию на текущую дату.
-                </p>
-            </div>
-            <div class="col-6 text-right">
-                <nav class="nav justify-content-end">
-                    <a class="nav-link" href="#">Работа</a>
-                    <a class="nav-link" href="#">Частые вопросы</a>
-                    <a class="nav-link" href="#">Условия</a>
-                    <a class="nav-link" href="#">Публичная оферта</a>
-                </nav>
-            </div>
+<footer class="bg-gray-900 mt-5">
+    {{--    <div class="container xl:max-w-screen-xl mx-auto px-5">--}}
+    {{--        <div class="grid grid-cols-2 gap-8 px-4 py-6 lg:py-8 md:grid-cols-4">--}}
+    {{--            <div>--}}
+    {{--                <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Company</h2>--}}
+    {{--                <ul class="text-gray-500 dark:text-gray-400 font-medium">--}}
+    {{--                    <li class="mb-4">--}}
+    {{--                        <a href="#" class=" hover:underline">About</a>--}}
+    {{--                    </li>--}}
+    {{--                    <li class="mb-4">--}}
+    {{--                        <a href="#" class="hover:underline">Careers</a>--}}
+    {{--                    </li>--}}
+    {{--                    <li class="mb-4">--}}
+    {{--                        <a href="#" class="hover:underline">Brand Center</a>--}}
+    {{--                    </li>--}}
+    {{--                    <li class="mb-4">--}}
+    {{--                        <a href="#" class="hover:underline">Blog</a>--}}
+    {{--                    </li>--}}
+    {{--                </ul>--}}
+    {{--            </div>--}}
+    {{--            <div>--}}
+    {{--                <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Help center</h2>--}}
+    {{--                <ul class="text-gray-500 dark:text-gray-400 font-medium">--}}
+    {{--                    <li class="mb-4">--}}
+    {{--                        <a href="#" class="hover:underline">Discord Server</a>--}}
+    {{--                    </li>--}}
+    {{--                    <li class="mb-4">--}}
+    {{--                        <a href="#" class="hover:underline">Twitter</a>--}}
+    {{--                    </li>--}}
+    {{--                    <li class="mb-4">--}}
+    {{--                        <a href="#" class="hover:underline">Facebook</a>--}}
+    {{--                    </li>--}}
+    {{--                    <li class="mb-4">--}}
+    {{--                        <a href="#" class="hover:underline">Contact Us</a>--}}
+    {{--                    </li>--}}
+    {{--                </ul>--}}
+    {{--            </div>--}}
+    {{--            <div>--}}
+    {{--                <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Legal</h2>--}}
+    {{--                <ul class="text-gray-500 dark:text-gray-400 font-medium">--}}
+    {{--                    <li class="mb-4">--}}
+    {{--                        <a href="#" class="hover:underline">Privacy Policy</a>--}}
+    {{--                    </li>--}}
+    {{--                    <li class="mb-4">--}}
+    {{--                        <a href="#" class="hover:underline">Licensing</a>--}}
+    {{--                    </li>--}}
+    {{--                    <li class="mb-4">--}}
+    {{--                        <a href="#" class="hover:underline">Terms &amp; Conditions</a>--}}
+    {{--                    </li>--}}
+    {{--                </ul>--}}
+    {{--            </div>--}}
+    {{--            <div>--}}
+    {{--                <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Download</h2>--}}
+    {{--                <ul class="text-gray-500 dark:text-gray-400 font-medium">--}}
+    {{--                    <li class="mb-4">--}}
+    {{--                        <a href="#" class="hover:underline">iOS</a>--}}
+    {{--                    </li>--}}
+    {{--                    <li class="mb-4">--}}
+    {{--                        <a href="#" class="hover:underline">Android</a>--}}
+    {{--                    </li>--}}
+    {{--                    <li class="mb-4">--}}
+    {{--                        <a href="#" class="hover:underline">Windows</a>--}}
+    {{--                    </li>--}}
+    {{--                    <li class="mb-4">--}}
+    {{--                        <a href="#" class="hover:underline">MacOS</a>--}}
+    {{--                    </li>--}}
+    {{--                </ul>--}}
+    {{--            </div>--}}
+    {{--        </div>--}}
+    {{--    </div>--}}
+
+    <div class="px-4 py-6 bg-dark md:flex md:items-center md:justify-between">
+        <div class="container xl:max-w-screen-xl mx-auto px-5">
+            <span class="text-sm text-gray-300 sm:text-center"
+            >{{ date('Y') . ' © ' . config('app.name') }}</span>
         </div>
     </div>
 </footer>
-<!-- End Footer -->

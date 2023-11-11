@@ -6,7 +6,12 @@ export default {
         "./resources/**/*.vue",
     ],
     theme: {
-        extend: {},
+        extend: {
+            colors: {
+                'light': '#FFE4DA',
+                'dark': '#414151',
+            },
+        },
     },
     plugins: [],
 }

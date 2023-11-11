@@ -1,68 +1,70 @@
 services:
-    clothing-store-fpm:
-        build:
-            args:
-                user: clothing_store_user
-                uid: 1000
-            context: ./
-            dockerfile: build/fpm/Dockerfile
-        image: clothing-store
-        container_name: clothing-store-fpm
-        working_dir: /var/www/
-        volumes:
-            - ./:/var/www
-        networks:
-            - clothing-store
-    clothing-store-mysql:
-        image: mysql:8.0.29
-        container_name: clothing-store-mysql
-        ports:
-            - '127.0.0.1:${DB_PORT}:3306'
-        environment:
-            MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
-            MYSQL_ROOT_HOST: "%"
-            MYSQL_DATABASE: '${DB_DATABASE}'
-            MYSQL_USER: '${DB_USERNAME}'
-            MYSQL_PASSWORD: '${DB_PASSWORD}'
-            SERVICE_TAGS: dev
-            SERVICE_NAME: mysql
-        volumes:
-            - mysql:/var/lib/mysql
-        networks:
-            - clothing-store
-    clothing-store-nginx:
-        image: nginx:alpine
-        container_name: clothing-store-nginx
-        ports:
-            - 8000:80
-        volumes:
-            - ./:/var/www
-            - ./build/nginx:/etc/nginx/conf.d/
-        networks:
-            - clothing-store
-        depends_on: [ clothing-store-fpm ]
-    clothing-store-redis:
-        image: redis:alpine
-        container_name: clothing-store-redis
-        networks:
-            - clothing-store
-    clothing-store-npm:
-        image: node:alpine3.17
-        container_name: clothing-store-npm
-        working_dir: /var/www
-        entrypoint:
-            - /bin/sh
-            - ./build/npm/entrypoint-local.sh
-        volumes:
-            - ./:/var/www
-        ports:
-            - '127.0.0.1:5173:5173'
-        networks:
-            - clothing-store
+  clothing-store-fpm:
+    build:
+      args:
+        user: clothing_store_user
+        uid: 1000
+      context: ./
+      dockerfile: build/fpm/Dockerfile
+    image: clothing-store
+    container_name: clothing-store-fpm
+    working_dir: /var/www/
+    volumes:
+      - ./:/var/www
+    networks:
+      - clothing-store
+  clothing-store-mysql:
+    image: mysql:8.0.29
+    container_name: clothing-store-mysql
+    ports:
+      - '127.0.0.1:${DB_PORT}:3306'
+    environment:
+      MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
+      MYSQL_ROOT_HOST: "%"
+      MYSQL_DATABASE: '${DB_DATABASE}'
+      MYSQL_USER: '${DB_USERNAME}'
+      MYSQL_PASSWORD: '${DB_PASSWORD}'
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    volumes:
+      - mysql:/var/lib/mysql
+    networks:
+      - clothing-store
+  clothing-store-nginx:
+    image: nginx:alpine
+    container_name: clothing-store-nginx
+    ports:
+      - 8000:80
+    volumes:
+      - ./:/var/www
+      - ./build/nginx:/etc/nginx/conf.d/
+    networks:
+      - clothing-store
+    depends_on: [ clothing-store-fpm ]
+  clothing-store-redis:
+    image: redis:alpine
+    container_name: clothing-store-redis
+    volumes:
+      - ./build/redis/data:/data
+    networks:
+      - clothing-store
+  clothing-store-npm:
+    image: node:alpine3.17
+    container_name: clothing-store-npm
+    working_dir: /var/www
+    entrypoint:
+      - /bin/sh
+      - ./build/npm/entrypoint-local.sh
+    volumes:
+      - ./:/var/www
+    ports:
+      - '127.0.0.1:5173:5173'
+    networks:
+      - clothing-store
 networks:
-    clothing-store:
-        name: clothing-store
-        driver: bridge
+  clothing-store:
+    name: clothing-store
+    driver: bridge
 volumes:
-    mysql:
-        driver: local
+  mysql:
+    driver: local
