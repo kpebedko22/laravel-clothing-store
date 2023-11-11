@@ -19,17 +19,15 @@
                 </div>
             </div>
             <div class="grid grid-cols-3 divide-x">
-                <div class="px-3">
+                <div class="px-5">
                     <a href="">
                         <x-heroicon-o-user class="w-8 h-8 text-gray-500 hover:text-gray-800"/>
                     </a>
                 </div>
-                <div class="px-3">
-                    <a href="">
-                        <x-heroicon-o-heart class="w-8 h-8 text-gray-500 hover:text-gray-800"/>
-                    </a>
+                <div class="px-5">
+                    <livewire:web.partials.favorite-product-button/>
                 </div>
-                <div class="px-3">
+                <div class="px-5">
                     <a href="">
                         <x-heroicon-o-shopping-bag class="w-8 h-8 text-gray-500 hover:text-gray-800"/>
                     </a>
@@ -39,7 +37,7 @@
     </div>
 </header>
 
-<div class="sticky top-0 bg-light/70 backdrop-blur-sm shadow-md">
+<div class="sticky top-0 bg-light/70 backdrop-blur-sm shadow-md z-10">
     <div class="container xl:max-w-screen-xl mx-auto px-5">
         <ul class="flex justify-start gap-5 py-3">
             @foreach($navigationCategories as $category)

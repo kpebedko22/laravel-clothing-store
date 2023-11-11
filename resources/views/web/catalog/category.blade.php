@@ -23,7 +23,7 @@
 
     <div class="mt-5 grid grid-cols-4 gap-4">
         @foreach ($products as $product)
-            <x-web.catalog.product-card :product="$product"/>
+            <x-web.catalog.product-card :data="$product"/>
         @endforeach
     </div>
 @endsection

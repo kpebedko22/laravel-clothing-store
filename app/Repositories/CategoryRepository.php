@@ -4,7 +4,6 @@ namespace App\Repositories;
 
 use App\Models\Category;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Facades\DB;
 
 //use Illuminate\Support\Collection;
 
@@ -27,6 +26,9 @@ final class CategoryRepository
     public function childCategoriesForCatalog(): Collection
     {
         return Category::query()
+            ->with([
+                'media',
+            ])
             ->where(['parent_id' => null])
             ->get();
     }
@@ -34,6 +36,9 @@ final class CategoryRepository
     public function childCategories(int $parentId): Collection
     {
         return Category::query()
+            ->with([
+                'media',
+            ])
             ->where(['parent_id' => $parentId])
             ->get();
     }

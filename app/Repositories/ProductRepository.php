@@ -2,11 +2,13 @@
 
 namespace App\Repositories;
 
+use App\DTOs\Web\Products\ProductCardDTO;
 use App\Models\Category;
 use App\Models\Product;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use App\Services\FavoriteProducts\FavoriteProductServiceFactory;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 
 final class ProductRepository
 {
@@ -36,8 +38,13 @@ final class ProductRepository
 
     public function forCatalog(): LengthAwarePaginator
     {
-        return $this->defaultQuery()
-            ->paginate();
+        $paginator = $this->defaultQuery()->paginate();
+
+        $items = $this->wrapToProductCard(collect($paginator->items()));
+
+        $paginator->setCollection($items);
+
+        return $paginator;
     }
 
     public function forCategory(Category $category): Collection
@@ -45,8 +52,23 @@ final class ProductRepository
         $categories = $category->descendants()->pluck('id')->toArray();
         $categories[] = $category->id;
 
-        return $this->defaultQuery()
+        $items = $this->defaultQuery()
             ->whereIntegerInRaw('category_id', $categories)
             ->get();
+
+        $items = $this->wrapToProductCard($items);
+
+        return $items;
+    }
+
+    protected function wrapToProductCard(Collection $products): Collection
+    {
+        return $products->map(function (Product $product) {
+
+            return new ProductCardDTO(
+                $product,
+                FavoriteProductServiceFactory::service()->isFavorite($product->id),
+            );
+        });
     }
 }
