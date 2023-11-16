@@ -23,7 +23,7 @@
         <h3>Популярные товары</h3>
         <div class="grid grid-cols-4 gap-4">
             @foreach($popularProducts as $product)
-                <x-web.catalog.product-card :data="$product"/>
+                <livewire:web.catalog.product-card :data="$product"/>
             @endforeach
         </div>
     </div>

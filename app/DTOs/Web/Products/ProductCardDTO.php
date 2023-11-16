@@ -60,6 +60,11 @@ final class ProductCardDTO implements Wireable
         return $this->isFavorite;
     }
 
+    public function setIsFavorite(bool $isFavorite): void
+    {
+        $this->isFavorite = $isFavorite;
+    }
+
     public function getCategoryName(): string
     {
         return $this->categoryName;

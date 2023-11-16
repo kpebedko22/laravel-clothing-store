@@ -5,6 +5,8 @@ namespace App\Repositories;
 use App\DTOs\Web\Products\ProductCardDTO;
 use App\Models\Category;
 use App\Models\Product;
+use App\Orders\Products\ProductOrder;
+use App\Orders\Sorters\SimpleSorter;
 use App\Services\FavoriteProducts\FavoriteProductServiceFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -38,26 +40,19 @@ final class ProductRepository
         return $this->wrapToProductCard($items);
     }
 
-    public function forCatalog(): LengthAwarePaginator
+    public function forCatalog(SimpleSorter $sorter, ?int $category = null): LengthAwarePaginator
     {
-        $paginator = $this->defaultQuery()->paginate(16);
+        $paginator = $this->defaultQuery();
 
-        $items = $this->wrapToProductCard(collect($paginator->items()));
+        if ($category) {
+            $category = Category::find($category);
+            $categories = $category->descendants()->pluck('id')->toArray();
+            $categories[] = $category->id;
 
-        $paginator->setCollection($items);
+            $paginator->whereIntegerInRaw('category_id', $categories);
+        }
 
-        return $paginator;
-    }
-
-    public function forCategory(int $category): LengthAwarePaginator
-    {
-        $category = Category::find($category);
-        $categories = $category->descendants()->pluck('id')->toArray();
-        $categories[] = $category->id;
-
-        $paginator = $this->defaultQuery()
-            ->whereIntegerInRaw('category_id', $categories)
-            ->paginate(16);
+        $paginator = $paginator->order(new ProductOrder, $sorter)->paginate(16);
 
         $items = $this->wrapToProductCard(collect($paginator->items()));
 

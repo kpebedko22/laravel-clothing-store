@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+use App\Orders\EloquentQueryOrder;
+use App\Orders\Orderable;
+use App\Orders\Sorters\Sorter;
 use Database\Factories\ProductFactory;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
@@ -38,6 +41,7 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|Product newModelQuery()
  * @method static Builder|Product newQuery()
  * @method static Builder|Product query()
+ * @method static Builder|Product order(EloquentQueryOrder $order, Sorter $sorter)
  *
  * @mixin Eloquent
  */
@@ -45,7 +49,8 @@ class Product extends Model implements HasMedia
 {
     use HasFactory,
         HasSlug,
-        InteractsWithMedia;
+        InteractsWithMedia,
+        Orderable;
 
     protected $guarded = ['id'];
 

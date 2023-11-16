@@ -2,8 +2,10 @@
 
 namespace App\Livewire\Web\Catalog;
 
+use App\Orders\Sorters\SimpleSorter;
 use App\Repositories\ProductRepository;
 use Illuminate\Contracts\View\View;
+use Livewire\Attributes\Url;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -13,6 +15,9 @@ class PaginatedProducts extends Component
 
     public ?int $categoryId = null;
 
+    #[Url]
+    public string $sort = '';
+
     public function placeholder(): View
     {
         return view('placeholders.web.catalog.paginated-products');
@@ -20,10 +25,10 @@ class PaginatedProducts extends Component
 
     public function render(): View
     {
+        $sorter = SimpleSorter::make($this->sort);
+
         return view('livewire.web.catalog.paginated-products', [
-            'products' => $this->categoryId
-                ? (new ProductRepository)->forCategory($this->categoryId)
-                : (new ProductRepository)->forCatalog(),
+            'products' => (new ProductRepository)->forCatalog($sorter, $this->categoryId),
         ]);
     }
 }
