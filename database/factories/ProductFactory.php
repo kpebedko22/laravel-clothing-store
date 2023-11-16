@@ -16,7 +16,7 @@ class ProductFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->word(),
+            'name' => fake()->clothing(),
             'desc' => fake()->realText(),
             'price' => rand(10, 99) * 10000,
             'category_id' => Category::factory(),
