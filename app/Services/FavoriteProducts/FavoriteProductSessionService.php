@@ -2,6 +2,7 @@
 
 namespace App\Services\FavoriteProducts;
 
+use App\Repositories\Products\FavoriteProductRepository;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Session;
 
@@ -47,8 +48,14 @@ class FavoriteProductSessionService implements FavoriteProductServiceInterface
 
     public function all(): Collection
     {
-        // TODO: Implement all() method.
-        return collect();
+        $ids = collect(Session::get(self::getSessionKey(), []))
+            ->keys()
+            ->toArray();
+
+        $products = (new FavoriteProductRepository)->productsByIds($ids);
+
+
+        return $products;
     }
 
     public function store(int $productId): bool

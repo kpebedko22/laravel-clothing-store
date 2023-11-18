@@ -9,7 +9,7 @@
         @foreach($childCategories as $childCategory)
             <div class="scroll-ml-6 snap-start border rounded-lg">
                 <a href="{{ route('web.catalog.category', $childCategory->path) }}">
-                    <div class="p-3">
+                    <div class="p-3 w-48">
                         <img src="{{ $childCategory->getFirstMediaUrl() }}"
                              class="w-full "
                              alt="{{ $childCategory->name }}"

@@ -5,7 +5,7 @@
 @endphp
 
 <div class="">
-    <div class="border rounded-lg bg-white shadow-lg">
+    <div class="border rounded-lg bg-white shadow-lg min-h-full">
 
         <div class="relative">
             <div class="absolute right-0 p-2">
@@ -32,7 +32,7 @@
             >
         </a>
 
-        <div class="p-3">
+        <div class="p-5 lg:p-3 flex flex-col ">
             <div class="">
                 <a href="{{ route('web.catalog.category', $data->getCategoryPath()) }}"
                    class="text-sm text-gray-400 truncate"

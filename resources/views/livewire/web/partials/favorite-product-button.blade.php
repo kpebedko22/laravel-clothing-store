@@ -1,10 +1,9 @@
 <div>
-    <a href=""
+    <a href="{{ route('web.favorite_products.index') }}"
        class="relative">
 
         @if($count)
-            <div
-                class="absolute -right-3 -top-3 bg-light rounded-full text-xs  w-6 h-6 flex justify-center items-center">
+            <div class="absolute -right-3 -top-3 bg-light rounded-full text-xs w-6 h-6 flex justify-center items-center">
                 {{ $count }}
             </div>
         @endif

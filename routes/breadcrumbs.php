@@ -22,17 +22,20 @@ Breadcrumbs::for('category', function (BreadcrumbTrail $trail, Category $categor
     $trail->parent('catalog');
 
     foreach ($category->ancestors as $ancestor) {
-        $trail->push($ancestor->name,  route('web.catalog.category', $ancestor->path));
+        $trail->push($ancestor->name, route('web.catalog.category', $ancestor->path));
     }
 
     $trail->push($category->name, route('web.catalog.category', $category->path));
-
-//    $trail->parent('catalog');
-//    $trail->push($category->name, route('web.catalog.category', $category->path));
 });
 
 // Главная > Каталог > [Категория] > [Товар]
 Breadcrumbs::for('product', function (BreadcrumbTrail $trail, Product $product) {
     $trail->parent('category', $product->category);
     $trail->push($product->name, route('web.products.show', $product->slug));
+});
+
+// Главная > Избранные товары
+Breadcrumbs::for('web.favorite_products.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('index');
+    $trail->push('Избранные товары', route('web.favorite_products.index'));
 });

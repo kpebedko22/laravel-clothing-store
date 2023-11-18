@@ -17,7 +17,7 @@
         </select>
     </div>
 
-    <div class="my-5 grid grid-cols-4 gap-4" wire:loading.remove>
+    <div class="my-5  grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4" wire:loading.remove>
         @php /** @var App\DTOs\Web\Products\ProductCardDTO $product */ @endphp
         @foreach ($products as $product)
             <livewire:web.catalog.product-card :data="$product" :key="$product->getProductId()"/>
