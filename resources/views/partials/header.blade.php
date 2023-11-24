@@ -1,3 +1,11 @@
+<div class="bg-light">
+    <div class="container xl:max-w-screen-xl mx-auto px-5">
+        <div class="py-1 flex">
+            <livewire:web.partials.city-picker/>
+        </div>
+    </div>
+</div>
+
 <header class="bg-white border-b">
     <div class="container xl:max-w-screen-xl mx-auto px-5">
         <div class="flex justify-between items-center py-3">
@@ -43,7 +51,7 @@
             @foreach($navigationCategories as $category)
                 <li class=" {{ request()->is($category->id) ? '' : '' }}">
                     <a href="{{ route('web.catalog.category', $category->path) }}"
-                       class="text-lg font-medium tracking-wide"
+                       class="text-lg font-medium tracking-wide hover:text-light-hover"
                     >
                         {{ $category->name }}
                     </a>

@@ -8,7 +8,10 @@ export default {
     theme: {
         extend: {
             colors: {
-                'light': '#FFE4DA',
+                'light': {
+                    DEFAULT: '#FFE4DA',
+                    'hover': '#FF875C',
+                },
                 'dark': '#414151',
             },
         },

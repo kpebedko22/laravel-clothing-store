@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Managers\Web\CityManager;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Database\Eloquent\Relations\Relation;
@@ -11,6 +12,9 @@ class AppServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
+        $this->app->singleton(CityManager::class, function () {
+            return new CityManager();
+        });
     }
 
     public function boot(): void

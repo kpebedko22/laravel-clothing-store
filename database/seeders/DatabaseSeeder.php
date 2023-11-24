@@ -4,8 +4,10 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\Category;
+use App\Models\City;
 use App\Models\Color;
 use App\Models\Product;
+use App\Models\Region;
 use App\Models\Size;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Sequence;
@@ -15,6 +17,13 @@ class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
+        $regions = Region::factory()->count(10)->create();
+        $cities = City::factory()
+            ->count(50)
+            ->sequence(fn(Sequence $sequence) => ['order' => $sequence->index + 1])
+            ->recycle($regions)
+            ->create();
+
         $colors = Color::factory()->count(10)->create();
         $sizes = Size::factory()->count(10)->create();
 
