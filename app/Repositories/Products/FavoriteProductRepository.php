@@ -10,6 +10,10 @@ final class FavoriteProductRepository
 {
     public function productsByIds(array $ids): Collection
     {
+        if (!$ids) {
+            return collect();
+        }
+
         $sortedIds = implode(',', $ids);
 
         return Product::query()

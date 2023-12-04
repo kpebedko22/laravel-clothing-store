@@ -34,10 +34,6 @@
                     <x-heroicon-o-shopping-bag class="w-6 h-6"/>
                     {{ 'Добавить в корзину' }}
                 </button>
-
-                <livewire:web.catalog.product-card-favorite-toggle :productId="$product->id"
-                                                                   :isFavorite="false"
-                />
             </div>
 
             <div class="">

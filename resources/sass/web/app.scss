@@ -2,10 +2,18 @@
 
 @import './components/product-card';
 
-main {
-    background: #f6f7f8;
-}
+//main {
+//    background: #f6f7f8;
+//}
 
 html {
     scroll-behavior: smooth;
+}
+
+main {
+    background-image: radial-gradient(circle at top, #fff, #FFE4DA 100%);
+}
+
+.dark main {
+    background-image: radial-gradient(circle at top, #412ea5, #1f2937, #111827 100%);
 }

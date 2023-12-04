@@ -6,9 +6,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,500;1,300;1,500&display=swap"
-          rel="stylesheet">
-
     <link rel="icon" href="{{ asset('img/favicon/favicon.svg') }}" type="image/svg+xml">
 
     <title>@yield('title')</title>
@@ -17,8 +14,10 @@
 </head>
 
 <body>
-
-<main>
+{{--  dark:bg-[#12100E] dark:bg-gradient-to-r dark:to-[#12100E] dark:from-[#2B4162] --}}
+{{--  bg-light/10 bg-gradient-to-r to-light/30 from-light/80 --}}
+{{-- background-image: radial-gradient(circle at top,#412ea5,#1f2937,#111827 100%); --}}
+<main class="">
     @include('partials.header')
 
     <div class="container xl:max-w-screen-xl mx-auto px-5">

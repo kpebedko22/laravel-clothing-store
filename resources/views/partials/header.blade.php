@@ -1,12 +1,14 @@
-<div class="bg-light">
+<div class="bg-light dark:bg-dark">
     <div class="container xl:max-w-screen-xl mx-auto px-5">
-        <div class="py-1 flex">
+        <div class="py-1 flex justify-between items-center">
             <livewire:web.partials.city-picker/>
+
+            <x-web.theme-switcher/>
         </div>
     </div>
 </div>
 
-<header class="bg-white border-b">
+<header class="bg-light/10 dark:bg-dark/30 border-b dark:border-b-dark/30">
     <div class="container xl:max-w-screen-xl mx-auto px-5">
         <div class="flex justify-between items-center py-3">
             <div class="flex items-center gap-3">
@@ -45,13 +47,13 @@
     </div>
 </header>
 
-<div class="sticky top-0 bg-light/70 backdrop-blur-sm shadow-md z-10">
+<div class="sticky top-0 backdrop-blur-sm shadow-md z-10 bg-light/70 dark:bg-dark/90">
     <div class="container xl:max-w-screen-xl mx-auto px-5">
         <ul class="flex justify-start gap-5 py-3">
             @foreach($navigationCategories as $category)
                 <li class=" {{ request()->is($category->id) ? '' : '' }}">
                     <a href="{{ route('web.catalog.category', $category->path) }}"
-                       class="text-lg font-medium tracking-wide hover:text-light-hover"
+                       class="text-lg font-medium tracking-wide hover:text-light-hover text-dark dark:text-white"
                     >
                         {{ $category->name }}
                     </a>

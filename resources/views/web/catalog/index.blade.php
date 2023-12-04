@@ -7,14 +7,14 @@
 
     <div class="w-full flex gap-4 snap-x overflow-x-auto">
         @foreach($childCategories as $childCategory)
-            <div class="scroll-ml-6 snap-start border rounded-lg">
+            <div class="scroll-ml-6 snap-start border transition-all dark:border-dark rounded-lg dark:bg-dark/90 dark:hover:bg-white/5 ">
                 <a href="{{ route('web.catalog.category', $childCategory->path) }}">
-                    <div class="p-3 w-48">
+                    <div class="p-3 w-48 ">
                         <img src="{{ $childCategory->getFirstMediaUrl() }}"
                              class="w-full "
                              alt="{{ $childCategory->name }}"
                         >
-                        <h4>{{ $childCategory->name }}</h4>
+                        <h4 class="dark:text-white">{{ $childCategory->name }}</h4>
                     </div>
                 </a>
             </div>

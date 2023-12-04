@@ -4,21 +4,6 @@
 
 @section('content')
 
-    <!-- Banner -->
-    <div class="banner bg-url('{{ asset('img/header.jpg') }}')">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="banner-message">
-                        <h1>Магазин одежды</h1>
-                        <h3>Мужская и женская одежда</h3>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- End Banner -->
-
     <div class="py-3">
         <h3>Популярные товары</h3>
         <div class="grid grid-cols-4 gap-4">

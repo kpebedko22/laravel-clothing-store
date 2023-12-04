@@ -17,6 +17,7 @@
         "vite": "^4.0.0"
     },
     "dependencies": {
+        "@ryangjchandler/alpine-tooltip": "^1.3.0",
         "alpinejs": "^3.13.2"
     }
 }

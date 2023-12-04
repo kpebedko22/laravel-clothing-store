@@ -2,10 +2,10 @@
 
 namespace App\Livewire\Web\Catalog;
 
+use App\Enums\Catalog\CatalogSort;
 use App\Orders\Sorters\SimpleSorter;
 use App\Repositories\ProductRepository;
 use Illuminate\Contracts\View\View;
-use Livewire\Attributes\Url;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -15,8 +15,18 @@ class PaginatedProducts extends Component
 
     public ?int $categoryId = null;
 
-    #[Url]
-    public string $sort = '';
+    public string $sort;
+
+    protected array $queryString = [
+        'sort' => [
+            'except' => 'popularity', // TODO: remove hardcode
+        ],
+    ];
+
+    public function mount(): void
+    {
+        $this->sort = $this->sort ?? CatalogSort::Popularity->value;
+    }
 
     public function placeholder(): View
     {
