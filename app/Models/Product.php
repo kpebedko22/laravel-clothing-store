@@ -27,14 +27,11 @@ use Spatie\Sluggable\SlugOptions;
  * @property string|null $desc
  * @property int $price
  * @property string $slug
- *
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- *
  * @property-read Category $category
  * @property-read Color $color
  * @property-read Size $size
- *
  * @property-read float $human_price
  *
  * @method static ProductFactory factory($count = null, $state = [])
@@ -57,7 +54,7 @@ class Product extends Model implements HasMedia
     protected function humanPrice(): Attribute
     {
         return Attribute::make(
-            get: fn() => $this->price / 100,
+            get: fn () => $this->price / 100,
         );
     }
 

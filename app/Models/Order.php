@@ -14,7 +14,6 @@ use Illuminate\Support\Carbon;
  * @property string $client_name
  * @property string $client_phone
  * @property string $client_email
- *
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  *

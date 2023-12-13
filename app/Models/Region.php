@@ -16,7 +16,6 @@ use Illuminate\Support\Carbon;
  * @property string $name
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- *
  * @property-read Collection<int, City> $cities
  * @property-read int|null $cities_count
  *

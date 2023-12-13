@@ -23,12 +23,6 @@ use Spatie\Sluggable\SlugOptions;
  * @property string $name
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- * @property-read Collection<int, Product> $products
- * @property-read int|null $products_count
- * @method static CategoryFactory factory($count = null, $state = [])
- * @method static Builder|Category newModelQuery()
- * @method static Builder|Category newQuery()
- * @method static Builder|Category query()
  * @property int|null $parent_id
  * @property int|null $root_category_id
  * @property int $_lft
@@ -36,23 +30,31 @@ use Spatie\Sluggable\SlugOptions;
  * @property string $slug
  * @property string $path
  * @property array $breadcrumbs
- * @property-read \Kalnoy\Nestedset\Collection<int, Category> $children
+ * @property-read int|null $products_count
  * @property-read int|null $children_count
+ * @property-read \Kalnoy\Nestedset\Collection<int, Category> $children
+ * @property-read Collection<int, Product> $products
  * @property-read Category|null $parent
  * @property-read Category|null $rootCategory
+ *
+ * @method static CategoryFactory factory($count = null, $state = [])
+ * @method static Builder|Category newModelQuery()
+ * @method static Builder|Category newQuery()
+ * @method static Builder|Category query()
  * @method static QueryBuilder|Category ancestorsAndSelf($id, array $columns = [])
  * @method static QueryBuilder|Category ancestorsOf($id, array $columns = [])
  * @method static QueryBuilder|Category defaultOrder(string $dir = 'asc')
  * @method static QueryBuilder|Category descendantsAndSelf($id, array $columns = [])
  * @method static QueryBuilder|Category descendantsOf($id, array $columns = [], $andSelf = false)
+ *
  * @mixin Eloquent
  */
 class Category extends Model implements HasMedia
 {
     use HasFactory,
-        NodeTrait,
         HasSlug,
-        InteractsWithMedia;
+        InteractsWithMedia,
+        NodeTrait;
 
     protected $guarded = ['id'];
 

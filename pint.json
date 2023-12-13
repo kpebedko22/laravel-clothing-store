@@ -10,6 +10,7 @@
         "braces_position": {
             "anonymous_classes_opening_brace": "same_line"
         },
-        "type_declaration_spaces": false
+        "type_declaration_spaces": false,
+        "not_operator_with_successor_space": false
     }
 }
