@@ -54,7 +54,6 @@ class FavoriteProductSessionService implements FavoriteProductServiceInterface
 
         $products = (new FavoriteProductRepository)->productsByIds($ids);
 
-
         return $products;
     }
 

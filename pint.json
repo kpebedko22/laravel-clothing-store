@@ -1,0 +1,14 @@
+{
+    "preset": "laravel",
+    "rules": {
+        "concat_space": {
+            "spacing": "one"
+        },
+        "nullable_type_declaration": true,
+        "nullable_type_declaration_for_default_null_value": true,
+        "cast_spaces": false,
+        "braces_position": {
+            "anonymous_classes_opening_brace": "same_line"
+        }
+    }
+}

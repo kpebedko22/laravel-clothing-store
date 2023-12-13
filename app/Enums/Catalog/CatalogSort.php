@@ -2,8 +2,6 @@
 
 namespace App\Enums\Catalog;
 
-use BackedEnum;
-use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Collection;
 use Livewire\Wireable;
 
@@ -19,7 +17,7 @@ enum CatalogSort: string implements Wireable
     public static function options(): Collection
     {
         return collect(self::cases())
-            ->mapWithKeys(function (BackedEnum $case) {
+            ->mapWithKeys(function (CatalogSort $case) {
                 return [$case->value => $case->getLabel()];
             });
     }
@@ -38,11 +36,4 @@ enum CatalogSort: string implements Wireable
     {
         return CatalogSort::tryFrom($value);
     }
-
-//    public function toArray()
-//    {
-//        return $this->to [
-//          'val'
-//        ];
-//    }
 }
