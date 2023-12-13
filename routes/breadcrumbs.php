@@ -10,6 +10,12 @@ Breadcrumbs::for('index', function (BreadcrumbTrail $trail) {
     $trail->push('Главная', route('web.index'));
 });
 
+// Главная > Авторизация
+Breadcrumbs::for('auth.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('index');
+    $trail->push('Авторизация', route('web.auth.index'));
+});
+
 // Главная > Каталог
 Breadcrumbs::for('catalog', function (BreadcrumbTrail $trail) {
     $trail->parent('index');

@@ -10,6 +10,7 @@ Route::name('web.')
         Route::get('/', [IndexController::class, 'index'])
             ->name('index');
 
+        require __DIR__ . '/web/auth.php';
         require __DIR__ . '/web/catalog.php';
         require __DIR__ . '/web/products.php';
         require __DIR__ . '/web/favorite-products.php';
