@@ -27,3 +27,6 @@ refresh:
 
 pint:
 	./vendor/bin/pint
+
+insights-fix:
+	php artisan insights --fix
