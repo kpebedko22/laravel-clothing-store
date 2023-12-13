@@ -32,7 +32,7 @@ class ClothingStoreController extends Controller
 
         return view('cart', [
             'cartItems' => $cartItems,
-            'cart' => $curCart
+            'cart' => $curCart,
         ]);
     }
 
@@ -87,10 +87,11 @@ class ClothingStoreController extends Controller
         $newCart = new Cart(['totalItems' => 0, 'totalPrice' => 0]);
         $newCart->save();
 
-        if ($order)
+        if ($order) {
             return redirect()->route('cart');
-        else
-            return back()->withErrors(['msg' => "Ошибка создания заказа"])->withInput();
+        } else {
+            return back()->withErrors(['msg' => 'Ошибка создания заказа'])->withInput();
+        }
     }
 
     public function previewCart(Request $req)
@@ -105,20 +106,20 @@ class ClothingStoreController extends Controller
 
         $clothesIDs = CartProduct::where('PK_Cart', $curCart->id)->get();
 
-        $cartItems = array();
+        $cartItems = [];
         foreach ($clothesIDs as $clothesID) {
             $cartItems[] = Product::find($clothesID->PK_Clothes);
         }
 
-        $myList = array();
+        $myList = [];
         $i = 0;
         foreach ($cartItems as $item) {
-            $myList[$i]["id"] = $item->id;
-            $myList[$i]["clothesName"] = $item->clothesName;
-            $myList[$i]["size"] = $item->Size->sizeName;
-            $myList[$i]["price"] = $item->price;
-            $myList[$i]["color"] = $item->Color->colorName;
-            $myList[$i]["imagePath"] = $item->imagePath;
+            $myList[$i]['id'] = $item->id;
+            $myList[$i]['clothesName'] = $item->clothesName;
+            $myList[$i]['size'] = $item->Size->sizeName;
+            $myList[$i]['price'] = $item->price;
+            $myList[$i]['color'] = $item->Color->colorName;
+            $myList[$i]['imagePath'] = $item->imagePath;
             $i += 1;
         }
 
@@ -126,13 +127,14 @@ class ClothingStoreController extends Controller
             return response()->json([
                 'status' => '1',
                 'cart' => $curCart,
-                'cartItems' => $myList
+                'cartItems' => $myList,
             ]);
-        } else
+        } else {
             return response()->json([
                 'status' => '0',
                 'info' => 'Failed to load cart',
             ]);
+        }
     }
 
     public function previewItem($id)
@@ -146,7 +148,7 @@ class ClothingStoreController extends Controller
                 'color' => $item->color->name,
                 'size' => $item->size->name,
                 'category' => $item->category->name,
-                'price' => $item->price
+                'price' => $item->price,
             ]);
         } else {
             return response()->json([

@@ -12,8 +12,7 @@ class CatalogController extends Controller
     public function __construct(
         protected CategoryRepository $categoryRepository,
         protected ProductRepository  $productRepository,
-    )
-    {
+    ) {
     }
 
     public function index(?string $path = null): View

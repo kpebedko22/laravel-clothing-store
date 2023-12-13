@@ -10,8 +10,7 @@ class IndexController extends Controller
 {
     public function __construct(
         protected ProductRepository $productRepository,
-    )
-    {
+    ) {
     }
 
     public function index(): View

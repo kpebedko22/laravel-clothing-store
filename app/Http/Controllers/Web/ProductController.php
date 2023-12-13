@@ -10,8 +10,7 @@ class ProductController extends Controller
 {
     public function __construct(
         protected ProductRepository $productRepository,
-    )
-    {
+    ) {
     }
 
     // Страница просмотра товара
