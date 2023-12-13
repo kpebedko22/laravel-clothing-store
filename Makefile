@@ -29,4 +29,4 @@ pint:
 	./vendor/bin/pint
 
 insights-fix:
-	php artisan insights --fix
+	php artisan insights --fix --flush-cache

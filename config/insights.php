@@ -10,6 +10,8 @@ use NunoMaduro\PhpInsights\Domain\Metrics\Architecture\Classes;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\Formatting\SpaceAfterNotSniff;
 use PHP_CodeSniffer\Standards\PSR12\Sniffs\Classes\ClassInstantiationSniff;
 use PhpCsFixer\Fixer\CastNotation\CastSpacesFixer;
+use PhpCsFixer\Fixer\FunctionNotation\FunctionDeclarationFixer;
+use PhpCsFixer\Fixer\FunctionNotation\FunctionTypehintSpaceFixer;
 use PhpCsFixer\Fixer\Operator\NewWithBracesFixer;
 use PhpCsFixer\Fixer\StringNotation\ExplicitStringVariableFixer;
 use SlevomatCodingStandard\Sniffs\Commenting\UselessFunctionDocCommentSniff;
@@ -96,6 +98,7 @@ return [
         ParameterTypeHintSpacingSniff::class,
         SpaceAfterNotSniff::class,
         NewWithBracesFixer::class,
+        FunctionTypehintSpaceFixer::class,
     ],
 
     'config' => [
@@ -105,6 +108,10 @@ return [
         CastSpacesFixer::class => [
             'space' => 'none',
         ],
+        FunctionDeclarationFixer::class => [
+            'closure_function_spacing' => 'one',
+            'closure_fn_spacing' => 'none',
+        ]
     ],
 
     /*
