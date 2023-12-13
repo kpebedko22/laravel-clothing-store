@@ -4,9 +4,9 @@ namespace App\Managers\Web;
 
 use Illuminate\Support\Facades\Session;
 
-class CityAliasCacheManager
+final class CityAliasCacheManager
 {
-    const KEY = 'city_alias';
+    private const KEY = 'city_alias';
 
     public static function getAlias(): ?string
     {

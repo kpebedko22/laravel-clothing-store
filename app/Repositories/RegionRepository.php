@@ -31,9 +31,11 @@ class RegionRepository
             ->limit(10)
             ->pluck('name', 'alias');
 
-        return [[
-            'name' => 'Популярные города',
-            'cities' => $cities,
-        ]];
+        return [
+            [
+                'name' => 'Популярные города',
+                'cities' => $cities,
+            ]
+        ];
     }
 }

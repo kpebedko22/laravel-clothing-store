@@ -15,7 +15,7 @@ class CityChangedListener
         CityAliasCacheManager::setAlias($alias);
 
         if (Auth::check()) {
-            $user = Auth::user();
+            Auth::user();
 
             //            $user->update([
             //                'region_id' => RegionRepository::byAliasCached($alias)?->id,

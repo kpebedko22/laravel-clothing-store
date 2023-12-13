@@ -8,7 +8,7 @@ class FavoriteProductServiceFactory
 {
     public static function service(): ?FavoriteProductServiceInterface
     {
-        return $user = Auth::user()
+        return Auth::user()
             ? null
             : new FavoriteProductSessionService;
     }
