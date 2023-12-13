@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Auth;
 
 class FavoriteProductServiceFactory
 {
-    public static function service(): ?FavoriteProductServiceInterface
+    public static function service(): ?IFavoriteProductService
     {
         return Auth::user()
             ? null

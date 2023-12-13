@@ -50,7 +50,6 @@ class ClothingStoreController extends Controller
         $allClothesToCart = CartProduct::where(['PK_Cart' => $curCart->id, 'PK_Clothes' => $id])->get();
 
         if (count($allClothesToCart) < 1) {
-
             $newCartClothes = new CartProduct(['PK_Cart' => $curCart->id, 'PK_Clothes' => $id]);
             $newCartClothes->save();
 
@@ -89,9 +88,9 @@ class ClothingStoreController extends Controller
 
         if ($order) {
             return redirect()->route('cart');
-        } else {
-            return back()->withErrors(['msg' => 'Ошибка создания заказа'])->withInput();
         }
+
+        return back()->withErrors(['msg' => 'Ошибка создания заказа'])->withInput();
     }
 
     public function previewCart(Request $req)
@@ -129,12 +128,12 @@ class ClothingStoreController extends Controller
                 'cart' => $curCart,
                 'cartItems' => $myList,
             ]);
-        } else {
-            return response()->json([
-                'status' => '0',
-                'info' => 'Failed to load cart',
-            ]);
         }
+
+        return response()->json([
+            'status' => '0',
+            'info' => 'Failed to load cart',
+        ]);
     }
 
     public function previewItem($id)
@@ -150,11 +149,11 @@ class ClothingStoreController extends Controller
                 'category' => $item->category->name,
                 'price' => $item->price,
             ]);
-        } else {
-            return response()->json([
-                'status' => '0',
-                'info' => 'Ошибка загрузки инофрмации о товаре',
-            ]);
         }
+
+        return response()->json([
+            'status' => '0',
+            'info' => 'Ошибка загрузки инофрмации о товаре',
+        ]);
     }
 }

@@ -6,20 +6,8 @@ use App\Repositories\Products\FavoriteProductRepository;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Session;
 
-class FavoriteProductSessionService implements FavoriteProductServiceInterface
+class FavoriteProductSessionService implements IFavoriteProductService
 {
-    protected function getSessionKey(?int $productId = null): string
-    {
-        return $productId
-            ? "favorite_products.$productId"
-            : 'favorite_products';
-    }
-
-    protected function getSessionProductKey(int $productId, string $key): string
-    {
-        return self::getSessionKey($productId) . '.' . $key;
-    }
-
     public function count(): int
     {
         return count(Session::get(self::getSessionKey(), []));
@@ -76,5 +64,17 @@ class FavoriteProductSessionService implements FavoriteProductServiceInterface
     public function clear(): void
     {
         Session::forget(self::getSessionKey());
+    }
+
+    protected function getSessionKey(?int $productId = null): string
+    {
+        return $productId
+            ? "favorite_products.{$productId}"
+            : 'favorite_products';
+    }
+
+    protected function getSessionProductKey(int $productId, string $key): string
+    {
+        return self::getSessionKey($productId) . '.' . $key;
     }
 }

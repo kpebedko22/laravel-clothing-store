@@ -35,7 +35,7 @@ class RegionRepository
             [
                 'name' => 'Популярные города',
                 'cities' => $cities,
-            ]
+            ],
         ];
     }
 }

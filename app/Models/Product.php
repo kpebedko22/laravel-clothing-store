@@ -51,13 +51,6 @@ class Product extends Model implements HasMedia
 
     protected $guarded = ['id'];
 
-    protected function humanPrice(): Attribute
-    {
-        return Attribute::make(
-            get: fn() => $this->price / 100,
-        );
-    }
-
     public function size(): BelongsTo|Size
     {
         return $this->belongsTo(Size::class, 'size_id', 'id');
@@ -86,5 +79,12 @@ class Product extends Model implements HasMedia
             ->addMediaCollection('default')
             ->useFallbackUrl('/img/products/placeholder.svg')
             ->useFallbackPath(public_path('/img/products/placeholder.svg'));
+    }
+
+    protected function humanPrice(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => $this->price / 100,
+        );
     }
 }

@@ -18,7 +18,6 @@ class Login extends Component
     public function login(): void
     {
         if (Auth::attempt($this->only(['email', 'password']), $this->remember)) {
-
             Debugbar::info('logged');
         }
 

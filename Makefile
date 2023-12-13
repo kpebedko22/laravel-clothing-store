@@ -24,3 +24,6 @@ refresh:
 	php artisan db:seed
 
 	exit 0
+
+pint:
+	./vendor/bin/pint

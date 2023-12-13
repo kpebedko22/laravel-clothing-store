@@ -23,7 +23,6 @@ abstract class EloquentQueryOrder extends BaseOrder
 
         if (in_array($sortColumn, $this->defaultSorts)) {
             $this->applyDefaultOrderBy($sortColumn, $sortDirection);
-
         } else {
             $method = Str::camel($sortColumn);
 

@@ -4,7 +4,7 @@ namespace App\Services\FavoriteProducts;
 
 use Illuminate\Support\Collection;
 
-interface FavoriteProductServiceInterface
+interface IFavoriteProductService
 {
     public function count(): int;
 

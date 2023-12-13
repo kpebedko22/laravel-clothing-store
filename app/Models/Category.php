@@ -84,39 +84,6 @@ class Category extends Model implements HasMedia
             ->saveSlugsTo('slug');
     }
 
-    protected static function boot(): void
-    {
-        parent::boot();
-
-        static::creating(function (Category $category) {
-            $category->generatePath();
-        });
-
-        static::created(function (Category $category) {
-            $category->root_category_id = $category->isRoot()
-                ? $category->id
-                : $category->parent->root_category_id;
-
-            $category->save();
-        });
-
-        static::saving(function (Category $category) {
-            if ($category->isDirty('name', 'slug', 'parent_id')) {
-                $category->generatePath();
-            }
-        });
-
-        static::saved(function (Category $category) {
-            static $updating = false;
-
-            if (!$updating && $category->isDirty('path')) {
-                $updating = true;
-                $category->updateDescendantsPaths();
-                $updating = false;
-            }
-        });
-    }
-
     public function generatePath(): static
     {
         $slug = $this->slug;
@@ -156,5 +123,38 @@ class Category extends Model implements HasMedia
             ->addMediaCollection('default')
             ->useFallbackUrl('/img/categories/placeholder.svg')
             ->useFallbackPath(public_path('/img/categories/placeholder.svg'));
+    }
+
+    protected static function boot(): void
+    {
+        parent::boot();
+
+        static::creating(function (Category $category) {
+            $category->generatePath();
+        });
+
+        static::created(function (Category $category) {
+            $category->root_category_id = $category->isRoot()
+                ? $category->id
+                : $category->parent->root_category_id;
+
+            $category->save();
+        });
+
+        static::saving(function (Category $category) {
+            if ($category->isDirty('name', 'slug', 'parent_id')) {
+                $category->generatePath();
+            }
+        });
+
+        static::saved(function (Category $category) {
+            static $updating = false;
+
+            if (!$updating && $category->isDirty('path')) {
+                $updating = true;
+                $category->updateDescendantsPaths();
+                $updating = false;
+            }
+        });
     }
 }

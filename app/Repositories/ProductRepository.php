@@ -14,15 +14,6 @@ use Illuminate\Support\Collection;
 
 final class ProductRepository
 {
-    protected function defaultQuery(): Builder|Product
-    {
-        return Product::query()
-            ->with([
-                'media',
-                'category',
-            ]);
-    }
-
     public function show(string $slug): Product
     {
         return Product::query()
@@ -52,7 +43,7 @@ final class ProductRepository
             $paginator->whereIntegerInRaw('category_id', $categories);
         }
 
-        $paginator = $paginator->order(new ProductOrder, $sorter)->paginate(16);
+        $paginator = $paginator->order(new ProductOrder(), $sorter)->paginate(16);
 
         $items = $this->wrapToProductCard(collect($paginator->items()));
 
@@ -61,10 +52,18 @@ final class ProductRepository
         return $paginator;
     }
 
+    protected function defaultQuery(): Builder|Product
+    {
+        return Product::query()
+            ->with([
+                'media',
+                'category',
+            ]);
+    }
+
     protected function wrapToProductCard(Collection $products): Collection
     {
         return $products->map(function (Product $product) {
-
             return new ProductCardDTO(
                 $product->id,
                 $product->slug,

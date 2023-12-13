@@ -24,7 +24,6 @@ Breadcrumbs::for('catalog', function (BreadcrumbTrail $trail) {
 
 // Главная > Каталог > [Категория]
 Breadcrumbs::for('category', function (BreadcrumbTrail $trail, Category $category) {
-
     $trail->parent('catalog');
 
     foreach ($category->ancestors as $ancestor) {
