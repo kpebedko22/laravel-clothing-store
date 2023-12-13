@@ -11,6 +11,9 @@
             "anonymous_classes_opening_brace": "same_line"
         },
         "type_declaration_spaces": false,
-        "not_operator_with_successor_space": false
+        "not_operator_with_successor_space": false,
+        "function_declaration": {
+            "closure_fn_spacing": "none"
+        }
     }
 }

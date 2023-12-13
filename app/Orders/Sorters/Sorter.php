@@ -4,7 +4,7 @@ namespace App\Orders\Sorters;
 
 abstract class Sorter
 {
-    public abstract function getSortColumn(?string $default = null): ?string;
+    abstract public function getSortColumn(?string $default = null): ?string;
 
-    public abstract function getSortDirection(string $default): string;
+    abstract public function getSortDirection(string $default): string;
 }

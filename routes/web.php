@@ -16,7 +16,6 @@ Route::name('web.')
         require __DIR__ . '/web/favorite-products.php';
     });
 
-
 Route::get('/cart', [ClothingStoreController::class, 'cart'])->name('cart');
 
 Route::get('add-item-to-cart-{id}', [ClothingStoreController::class, 'addItemToCart'])->name('cart.add');

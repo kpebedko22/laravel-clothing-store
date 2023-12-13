@@ -9,8 +9,7 @@ class SimpleSorter extends Sorter
     protected function __construct(
         protected ?string $sortColumn,
         protected ?string $sortDirection
-    )
-    {
+    ) {
     }
 
     public static function make(?string $sort): static

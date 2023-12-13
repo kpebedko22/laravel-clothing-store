@@ -54,7 +54,7 @@ class Product extends Model implements HasMedia
     protected function humanPrice(): Attribute
     {
         return Attribute::make(
-            get: fn () => $this->price / 100,
+            get: fn() => $this->price / 100,
         );
     }
 
