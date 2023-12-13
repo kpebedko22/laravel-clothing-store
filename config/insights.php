@@ -111,7 +111,7 @@ return [
         FunctionDeclarationFixer::class => [
             'closure_function_spacing' => 'one',
             'closure_fn_spacing' => 'none',
-        ]
+        ],
     ],
 
     /*

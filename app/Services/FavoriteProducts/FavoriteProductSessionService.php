@@ -40,9 +40,7 @@ class FavoriteProductSessionService implements IFavoriteProductService
             ->keys()
             ->toArray();
 
-        $products = (new FavoriteProductRepository)->productsByIds($ids);
-
-        return $products;
+        return (new FavoriteProductRepository)->productsByIds($ids);
     }
 
     public function store(int $productId): bool

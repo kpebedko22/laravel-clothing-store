@@ -30,3 +30,4 @@ pint:
 
 insights-fix:
 	php artisan insights --fix --flush-cache
+	./vendor/bin/pint
