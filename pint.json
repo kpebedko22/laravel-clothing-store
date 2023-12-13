@@ -9,6 +9,7 @@
         "cast_spaces": false,
         "braces_position": {
             "anonymous_classes_opening_brace": "same_line"
-        }
+        },
+        "type_declaration_spaces": false
     }
 }

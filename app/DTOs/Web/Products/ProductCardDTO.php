@@ -16,8 +16,7 @@ final class ProductCardDTO implements Wireable
         protected string $categoryPath,
         protected string $categoryName,
         protected bool   $isFavorite,
-    )
-    {
+    ) {
     }
 
     public function getProductSlug(): string
