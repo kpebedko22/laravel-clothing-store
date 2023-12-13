@@ -7,12 +7,16 @@ use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenNormalClasses;
 use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenPrivateMethods;
 use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenTraits;
 use NunoMaduro\PhpInsights\Domain\Metrics\Architecture\Classes;
+use PHP_CodeSniffer\Standards\PSR12\Sniffs\Classes\ClassInstantiationSniff;
+use PhpCsFixer\Fixer\CastNotation\CastSpacesFixer;
+use PhpCsFixer\Fixer\StringNotation\ExplicitStringVariableFixer;
 use SlevomatCodingStandard\Sniffs\Commenting\UselessFunctionDocCommentSniff;
 use SlevomatCodingStandard\Sniffs\ControlStructures\DisallowShortTernaryOperatorSniff;
 use SlevomatCodingStandard\Sniffs\Namespaces\AlphabeticallySortedUsesSniff;
 use SlevomatCodingStandard\Sniffs\TypeHints\DeclareStrictTypesSniff;
 use SlevomatCodingStandard\Sniffs\TypeHints\DisallowMixedTypeHintSniff;
 use SlevomatCodingStandard\Sniffs\TypeHints\ParameterTypeHintSniff;
+use SlevomatCodingStandard\Sniffs\TypeHints\ParameterTypeHintSpacingSniff;
 use SlevomatCodingStandard\Sniffs\TypeHints\PropertyTypeHintSniff;
 use SlevomatCodingStandard\Sniffs\TypeHints\ReturnTypeHintSniff;
 
@@ -85,13 +89,16 @@ return [
         ReturnTypeHintSniff::class,
         UselessFunctionDocCommentSniff::class,
         DisallowShortTernaryOperatorSniff::class,
+        ExplicitStringVariableFixer::class,
+        ClassInstantiationSniff::class,
+        ParameterTypeHintSpacingSniff::class,
     ],
 
     'config' => [
         ForbiddenPrivateMethods::class => [
             'title' => 'The usage of private methods is not idiomatic in Laravel.',
         ],
-        PhpCsFixer\Fixer\CastNotation\CastSpacesFixer::class => [
+        CastSpacesFixer::class => [
             'space' => 'none',
         ],
     ],
