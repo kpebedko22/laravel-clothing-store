@@ -8,8 +8,8 @@ class FavoriteProductServiceFactory
 {
     public static function service(): ?IFavoriteProductService
     {
-        return Auth::user()
-            ? null
+        return ($user = Auth::user())
+            ? new FavoriteProductDBService($user)
             : new FavoriteProductSessionService;
     }
 }

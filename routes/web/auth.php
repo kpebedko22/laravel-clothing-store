@@ -7,5 +7,14 @@ Route::prefix('auth')
     ->controller(AuthController::class)
     ->group(function () {
         Route::get('', 'index')
+            ->middleware([
+                'guest:web',
+            ])
             ->name('index');
+
+        Route::post('logout', 'logout')
+            ->middleware([
+                'auth:web',
+            ])
+            ->name('logout');
     });

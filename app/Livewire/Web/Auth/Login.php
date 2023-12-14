@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Web\Auth;
 
-use Barryvdh\Debugbar\Facades\Debugbar;
+use App\Providers\RouteServiceProvider;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
@@ -18,7 +18,7 @@ class Login extends Component
     public function login(): void
     {
         if (Auth::attempt($this->only(['email', 'password']), $this->remember)) {
-            Debugbar::info('logged');
+            redirect(RouteServiceProvider::HOME);
         }
 
         $this->addError('email', 'Invalid credentials');

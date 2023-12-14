@@ -44,3 +44,9 @@ Breadcrumbs::for('web.favorite_products.index', function (BreadcrumbTrail $trail
     $trail->parent('index');
     $trail->push('Избранные товары', route('web.favorite_products.index'));
 });
+
+// Главная > Личный кабинет
+Breadcrumbs::for('web.personal.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('index');
+    $trail->push('Личный кабинет', route('web.personal.index'));
+});
