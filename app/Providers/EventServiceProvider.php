@@ -7,6 +7,8 @@ use App\Listeners\Web\CityChangedListener;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
+use SocialiteProviders\Manager\SocialiteWasCalled;
+use SocialiteProviders\Yandex\YandexExtendSocialite;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -16,6 +18,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         CityChangedEvent::class => [
             CityChangedListener::class,
+        ],
+        SocialiteWasCalled::class => [
+            YandexExtendSocialite::class . '@handle',
         ],
     ];
 

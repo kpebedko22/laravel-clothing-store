@@ -22,8 +22,14 @@ refresh:
 	php artisan optimize
 	php artisan migrate:fresh
 	php artisan db:seed
+	php artisan ide-helper:models -N -M
 
 	exit 0
+
+migrate:
+	php artisan optimize
+	php artisan migrate
+	php artisan ide-helper:models -N -M
 
 pint:
 	./vendor/bin/pint

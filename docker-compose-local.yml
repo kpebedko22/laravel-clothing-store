@@ -48,6 +48,16 @@ services:
       - ./build/redis/data:/data
     networks:
       - clothing-store
+  clothing-store-horizon:
+    image: clothing-store
+    container_name: clothing-store-horizon
+    working_dir: /var/www/
+    command: php artisan horizon
+    depends_on: [ clothing-store-redis ]
+    volumes:
+      - ./:/var/www
+    networks:
+      - clothing-store
   clothing-store-npm:
     image: node:alpine3.17
     container_name: clothing-store-npm

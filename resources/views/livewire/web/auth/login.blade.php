@@ -1,5 +1,5 @@
 <form wire:submit="login">
-    <div class="flex flex-col gap-3">
+    <div class="mb-4 flex flex-col gap-3">
 
         <div class="">
             <x-web.form.label for="email" label="{{ 'Email' }}"/>
@@ -33,8 +33,10 @@
         </div>
 
     </div>
-
-    <button type="submit">
-        {{ 'Войти' }}
-    </button>
+    <div class="flex">
+        <button type="submit"
+                class="p-3 border rounded-lg">
+            {{ 'Войти' }}
+        </button>
+    </div>
 </form>
