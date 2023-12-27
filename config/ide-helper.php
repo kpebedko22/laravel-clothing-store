@@ -152,7 +152,7 @@ return [
     */
 
     'ignored_models' => [
-
+        \App\Models\Category::class,
     ],
 
     /*

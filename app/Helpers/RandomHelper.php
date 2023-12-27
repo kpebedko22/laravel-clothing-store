@@ -9,8 +9,8 @@ final class RandomHelper
     /**
      * Возвращает случайную строку длиной $size.
      *
-     * @param int $size Длина случайной строки
-     * @param bool $onlyNumbers Только цифры участвуют в случайной строке
+     * @param  int  $size Длина случайной строки
+     * @param  bool  $onlyNumbers Только цифры участвуют в случайной строке
      */
     public static function string(int $size, bool $onlyNumbers = false): string
     {

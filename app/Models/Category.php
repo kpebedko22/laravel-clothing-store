@@ -87,10 +87,6 @@ use Spatie\Sluggable\SlugOptions;
  * @method static QueryBuilder|Category whereNotDescendantOf($id)
  * @method static QueryBuilder|Category withDepth(string $as = 'depth')
  * @method static QueryBuilder|Category withoutRoot()
- * @method static Collection<int, static> all($columns = ['*'])
- * @method static Collection<int, static> get($columns = ['*'])
- * @method static Collection<int, static> all($columns = ['*'])
- * @method static Collection<int, static> get($columns = ['*'])
  *
  * @mixin Eloquent
  */
