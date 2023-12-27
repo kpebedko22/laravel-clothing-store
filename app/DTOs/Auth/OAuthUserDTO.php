@@ -28,8 +28,8 @@ final class OAuthUserDTO implements Arrayable
         if ($phone) {
             $phone = preg_replace(
                 "/^(\d)(\d{3})(\d{3})(\d{2})(\d{2})$/",
-                "+$1($2)$3-$4-$5",
-                preg_replace("/[^0-9]/", "", $phone)
+                '+$1($2)$3-$4-$5',
+                preg_replace('/[^0-9]/', '', $phone)
             );
         }
 

@@ -9,7 +9,7 @@ use Throwable;
 
 final class OAuthException extends RuntimeException
 {
-    public static function default(OAuthProvider $provider, Throwable $previous): self
+    public static function default(OAuthProvider $provider, Throwable $previous): OAuthException
     {
         return new OAuthException(
             __('exceptions/oauth.default', [
@@ -20,10 +20,20 @@ final class OAuthException extends RuntimeException
         );
     }
 
-    public static function credentialsAlreadyInUse(OAuthProvider $provider, string $email): self
+    public static function credentialsAlreadyInUse(OAuthProvider $provider, string $email): OAuthException
     {
         return new OAuthException(
             __('exceptions/oauth.credentials_already_in_use', [
+                'provider' => Str::headline($provider->value),
+                'email' => $email,
+            ])
+        );
+    }
+
+    public static function alreadyConnected(OAuthProvider $provider, string $email): OAuthException
+    {
+        return new OAuthException(
+            __('exceptions/oauth.already_connected', [
                 'provider' => Str::headline($provider->value),
                 'email' => $email,
             ])

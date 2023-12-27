@@ -25,6 +25,8 @@ final class OAuthController extends Controller
 
     public function callback(OAuthRequest $request): RedirectResponse
     {
+        $authorizedUser = Auth::user();
+
         $provider = $request->getProvider();
 
         try {
@@ -35,9 +37,12 @@ final class OAuthController extends Controller
 
         $data = OAuthUserDTO::fromUser($provider, $userData);
 
-        $user = $this->service->auth($data);
-
-        Auth::guard('web')->login($user);
+        if (!$authorizedUser) {
+            $user = $this->service->auth($data);
+            Auth::guard('web')->login($user);
+        } else {
+            $this->service->connect($authorizedUser, $data);
+        }
 
         return redirect()->route('web.personal.index');
     }

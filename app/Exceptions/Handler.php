@@ -4,6 +4,7 @@ namespace App\Exceptions;
 
 use App\Exceptions\Auth\OAuthException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Throwable;
 
@@ -18,13 +19,16 @@ class Handler extends ExceptionHandler
     public function register(): void
     {
         $this->renderable(function (OAuthException $e, $request) {
-
             if ($previous = $e->getPrevious()) {
                 Log::error('OAuth: ' . $previous->getMessage());
             }
 
+            $route = Auth::check()
+                ? 'web.personal.profile.index'
+                : 'web.auth.index';
+
             return redirect()
-                ->route('web.auth.index')
+                ->route($route)
                 ->withErrors($e->getMessage(), 'oauth');
         });
 

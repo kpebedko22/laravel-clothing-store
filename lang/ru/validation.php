@@ -133,4 +133,11 @@ return [
             'rule-name' => 'custom-message',
         ],
     ],
+
+    'invalid_credentials' => 'Неверные :attribute или пароль.',
+
+    'attributes' => [
+        'email' => 'email',
+        'password' => 'пароль',
+    ],
 ];

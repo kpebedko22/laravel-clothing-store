@@ -5,28 +5,32 @@
 @section('content')
     {{ Breadcrumbs::render('auth.index') }}
 
-    <div class="border rounded-lg bg-white dark:bg-dark dark:text-white shadow-lg p-5">
+    <div class="container md:max-w-screen-md mx-auto">
+        <div class="border rounded-lg bg-white dark:bg-dark dark:text-white shadow-lg p-8">
 
-        <h1 class="">{{ 'Авторизация' }}</h1>
+            <h1 class="text-4xl font-bold mb-4">{{ 'Авторизация' }}</h1>
 
-        <h2 class="mb-4">{{ 'Авторизировавшись, вы сможете управлять своими личными данными, следить за состоянием заказов.' }}</h2>
+            <h2 class="mb-4">{{ 'Авторизировавшись, вы сможете управлять своими личными данными, следить за состоянием заказов.' }}</h2>
 
-        <div class="flex mb-4">
-            <a href="{{ route('web.auth.oauth.redirect', [App\Enums\Auth\OAuthProvider::Yandex]) }}"
-               class="border border-orange-600 text-orange-600 p-3 rounded-lg hover:bg-orange-600 hover:text-white transition-all"
-            >
-                {{ 'Войти через Яндекс' }}
-            </a>
-        </div>
+            <hr>
 
-        @php /** @var Illuminate\Support\ViewErrorBag $errors */ @endphp
-        @if (($bag = $errors->getBag('oauth')) && $bag->isNotEmpty())
-            <div class="p-4 mb-4 text-red-500 rounded-lg bg-red-100 dark:bg-gray-800 dark:text-red-400"
-                 role="alert">
-                <span class="font-medium">{{ $bag->first() }}</span>
+            <div class="flex my-4">
+                <a href="{{ route('web.auth.oauth.redirect', [App\Enums\Auth\OAuthProvider::Yandex]) }}"
+                   class="border border-orange-600 text-orange-600 p-3 rounded-lg hover:bg-orange-600 hover:text-white transition-all"
+                >
+                    {{ 'Войти через Яндекс' }}
+                </a>
             </div>
-        @endif
 
-        <livewire:web.auth.login/>
+            @php /** @var Illuminate\Support\ViewErrorBag $errors */ @endphp
+            @if (($bag = $errors->getBag('oauth')) && $bag->isNotEmpty())
+                <div class="p-4 mb-4 text-red-500 rounded-lg bg-red-100 dark:bg-gray-800 dark:text-red-400"
+                     role="alert">
+                    <span class="font-medium">{{ $bag->first() }}</span>
+                </div>
+            @endif
+
+            <livewire:web.auth.login/>
+        </div>
     </div>
 @endsection

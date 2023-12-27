@@ -11,7 +11,6 @@ final class RandomHelper
      *
      * @param int $size Длина случайной строки
      * @param bool $onlyNumbers Только цифры участвуют в случайной строке
-     * @return string
      */
     public static function string(int $size, bool $onlyNumbers = false): string
     {
@@ -20,7 +19,7 @@ final class RandomHelper
         }
 
         return $onlyNumbers
-            ? substr(str_shuffle("0123456789"), 0, $size)
+            ? substr(str_shuffle('0123456789'), 0, $size)
             : Str::random($size);
     }
 }

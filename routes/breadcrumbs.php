@@ -50,3 +50,9 @@ Breadcrumbs::for('web.personal.index', function (BreadcrumbTrail $trail) {
     $trail->parent('index');
     $trail->push('Личный кабинет', route('web.personal.index'));
 });
+
+// Главная > Личный кабинет > Личные данные
+Breadcrumbs::for('web.personal.profile', function (BreadcrumbTrail $trail) {
+    $trail->parent('web.personal.index');
+    $trail->push('Личные данные', route('web.personal.profile'));
+});

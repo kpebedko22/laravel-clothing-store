@@ -12,11 +12,17 @@ export default {
                     DEFAULT: '#FFE4DA',
                     'hover': '#FF875C',
                 },
-                'secondary':{
+                'secondary': {
                     DEFAULT: '#98E2C6',
                 },
                 // 'dark': '#414151',
                 'dark': '#27233A',
+
+                'primary': {
+                    DEFAULT: '#FA6837FF',
+                    // 'hover': '#FF875C',
+                    'h': '#FF875C',
+                },
             },
         },
         fontFamily: {

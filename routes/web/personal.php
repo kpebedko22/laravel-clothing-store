@@ -4,10 +4,14 @@ use App\Http\Controllers\Web\Personal\PersonalController;
 
 Route::prefix('personal')
     ->name('personal.')
+    ->middleware([
+        'auth:web',
+    ])
+    ->controller(PersonalController::class)
     ->group(function () {
-        Route::get('', [PersonalController::class, 'index'])
-            ->middleware([
-                'auth:web',
-            ])
+        Route::get('', 'index')
             ->name('index');
+
+        Route::get('profile', 'profile')
+            ->name('profile');
     });

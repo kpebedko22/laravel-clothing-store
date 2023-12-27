@@ -11,4 +11,9 @@ class PersonalController extends Controller
     {
         return view('web.personal.index');
     }
+
+    public function profile(): View
+    {
+        return view('web.personal.profile');
+    }
 }

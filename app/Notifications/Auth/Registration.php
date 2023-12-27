@@ -55,7 +55,7 @@ final class Registration extends Notification implements ShouldQueue
             ->linesIf($this->type === self::OAUTH, [
                 "Ваш пароль: $this->password",
                 "Вы успешно авторизовались через $provider.",
-                "Для Вас был автоматически сгенерирован временный пароль. Рекомендуется поменять его через настройки аккаунта.",
+                'Для Вас был автоматически сгенерирован временный пароль. Рекомендуется поменять его через настройки аккаунта.',
             ])
             ->salutation(new HtmlString("С уважением,<br>$appName"));
     }
