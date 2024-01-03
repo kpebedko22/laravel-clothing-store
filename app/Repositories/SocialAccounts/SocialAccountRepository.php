@@ -25,7 +25,7 @@ final class SocialAccountRepository
             ->socialAccounts()
             ->get()
             ->mapWithKeys(fn(SocialAccount $account) => [
-                $account->provider->value => $account
+                $account->provider->value => $account,
             ]);
     }
 }

@@ -38,7 +38,6 @@ final class OAuthService
     {
         // TODO: move to abstract
         return DB::transaction(function () use ($data): User {
-
             $password = Str::password(config('auth.password_min_length'));
 
             $user = User::query()

@@ -39,7 +39,6 @@ class OAuthLogin extends Component
             $service = App::make(OAuthService::class);
 
             $user = $service->register(new OAuthRegisterDTO($this->email, $this->oAuthData));
-
         } catch (Throwable $ex) {
             $this->addError('email', "Ошибка регистрации. Попробуйте позже. {$ex->getMessage()}");
 
@@ -59,7 +58,6 @@ class OAuthLogin extends Component
         ]);
 
         if (Auth::attempt($this->only(['email', 'password']), $this->remember)) {
-
             $user = Auth::user();
 
             /** @var OAuthService $service */
