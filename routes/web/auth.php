@@ -29,5 +29,14 @@ Route::prefix('auth')
 
                 Route::get('callback', 'callback')
                     ->name('callback');
+
+                Route::get('new', 'new')
+                    ->name('new');
+
+                Route::post('disconnect', 'disconnect')
+                    ->middleware([
+                        'auth:web',
+                    ])
+                    ->name('disconnect');
             });
     });

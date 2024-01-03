@@ -2,60 +2,86 @@
 
 namespace App\Services\Web\Auth;
 
+use App\DTOs\Auth\OAuthRegisterDTO;
 use App\DTOs\Auth\OAuthUserDTO;
+use App\Enums\Auth\OAuthProvider;
 use App\Exceptions\Auth\OAuthException;
-use App\Helpers\RandomHelper;
+use App\Models\SocialAccount;
 use App\Models\User;
-use App\Notifications\Auth\OAuthConnected;
+use App\Notifications\Auth\OAuthChanged;
 use App\Notifications\Auth\Registration;
-use App\Repositories\Users\UserAuthRepository;
+use App\Repositories\SocialAccounts\SocialAccountRepository;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 final class OAuthService
 {
     public function __construct(
-        private readonly UserAuthRepository $repository,
+        private readonly SocialAccountRepository $socialAccountRepository,
     ) {
     }
 
+    /**
+     * Поиск пользователя через аккаунт соц. сети
+     */
     public function auth(OAuthUserDTO $data): ?User
     {
-        // 1. Найти пользователя по id из внешнего сервиса {provider}_id
-        $user = $this->repository->firstByOAuthId($data->provider, $data->id);
+        return $this->socialAccountRepository
+            ->findByProviderAndId($data->provider, $data->id)
+            ?->user;
+    }
 
-        if ($user) {
+    /**
+     * Регистрация пользователя через соц. сеть
+     */
+    public function register(OAuthRegisterDTO $data): User
+    {
+        // TODO: move to abstract
+        return DB::transaction(function () use ($data): User {
+
+            $password = Str::password(config('auth.password_min_length'));
+
+            $user = User::query()
+                ->create(array_merge(['password' => $password], $data->toArray()));
+
+            SocialAccount::query()
+                ->create(array_merge(['user_id' => $user->id], $data->oAuthData->toArray()));
+
+            // Отправить письмо с паролем
+            $user->notify(Registration::oAuth($data->oAuthData->provider, $password));
+
             return $user;
+        });
+    }
+
+    /**
+     * Привязка аккаунта соц. сети к пользователю
+     */
+    public function connect(User $user, OAuthUserDTO $data): User
+    {
+        $socialAccountAlreadyExists = $user->socialAccounts()->where(['provider' => $data->provider])->exists();
+
+        if ($socialAccountAlreadyExists) {
+            throw OAuthException::alreadyConnected($data->provider, $data->email);
         }
 
-        // 2. Найти пользователя по email. Если есть - значит пользователь должен самостоятельно привязать аккаунт.
-        $user = $this->repository->firstByEmail($data->email);
+        $user->socialAccounts()->create($data->toArray());
 
-        if ($user) {
-            throw OAuthException::credentialsAlreadyInUse($data->provider, $data->email);
-        }
-
-        // 3. Можно зарегистрировать нового пользователя.
-        $password = RandomHelper::string(config('auth.password_min_length'));
-
-        $user = User::create(array_merge(['password' => $password], $data->toArray()));
-
-        $user->notify(Registration::oAuth($data->provider, $password));
+        $user->notify(OAuthChanged::connected($data->provider));
 
         return $user;
     }
 
-    public function connect(User $user, OAuthUserDTO $data): User
+    /**
+     * Отвязка аккаунта соц. сети от пользователя
+     */
+    public function disconnect(User $user, OAuthProvider $provider): User
     {
-        $attr = $data->provider->dbColumn();
+        $deleted = $user->socialAccounts()->where(['provider' => $provider])->delete();
 
-        if ($user->{$attr}) {
-            throw OAuthException::alreadyConnected($data->provider, $data->email);
+        if ($deleted) {
+            $user->notify(OAuthChanged::disconnected($provider));
         }
-
-        $user->update([
-            $data->provider->dbColumn() => $data->id,
-        ]);
-
-        $user->notify(new OAuthConnected($data->provider));
 
         return $user;
     }

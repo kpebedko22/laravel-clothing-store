@@ -9,13 +9,13 @@ use Throwable;
 
 final class OAuthException extends RuntimeException
 {
-    public static function default(OAuthProvider $provider, Throwable $previous): OAuthException
+    public static function default(OAuthProvider $provider, ?Throwable $previous = null): OAuthException
     {
         return new OAuthException(
             __('exceptions/oauth.default', [
                 'provider' => Str::headline($provider->value),
             ]),
-            $previous->getCode(),
+            $previous?->getCode(),
             $previous,
         );
     }

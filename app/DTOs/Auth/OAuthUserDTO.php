@@ -7,8 +7,9 @@ use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
 use Laravel\Socialite\Contracts\User;
+use Livewire\Wireable;
 
-final class OAuthUserDTO implements Arrayable
+final class OAuthUserDTO implements Arrayable, Wireable
 {
     public function __construct(
         public readonly OAuthProvider $provider,
@@ -50,13 +51,37 @@ final class OAuthUserDTO implements Arrayable
     public function toArray(): array
     {
         return [
-            $this->provider->dbColumn() => $this->id,
+            'social_id' => $this->id,
+            'provider' => $this->provider,
+            'name' => trim("$this->firstName $this->lastName"),
+        ];
+    }
+
+    public function toLivewire(): array
+    {
+        return [
+            'provider' => $this->provider->value,
+            'id' => $this->id,
             'email' => $this->email,
             'first_name' => $this->firstName,
             'last_name' => $this->lastName,
             'phone' => $this->phone,
             'gender' => $this->gender,
-            'birthday' => $this->birthday,
+            'birthday' => $this->birthday?->toString(),
         ];
+    }
+
+    public static function fromLivewire($value): OAuthUserDTO
+    {
+        return new OAuthUserDTO(
+            OAuthProvider::from(Arr::get($value, 'provider')),
+            Arr::get($value, 'id'),
+            Arr::get($value, 'email'),
+            Arr::get($value, 'first_name'),
+            Arr::get($value, 'last_name'),
+            Arr::get($value, 'phone'),
+            Arr::get($value, 'gender'),
+            Carbon::parse(Arr::get($value, 'birthday')),
+        );
     }
 }

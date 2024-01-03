@@ -132,6 +132,9 @@ return [
         'attribute-name' => [
             'rule-name' => 'custom-message',
         ],
+        'email' => [
+            'unique' => 'Данная почта уже занята.',
+        ],
     ],
 
     'invalid_credentials' => 'Неверные :attribute или пароль.',

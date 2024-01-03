@@ -1,3 +1,9 @@
+@php
+    /**
+     * @var Illuminate\Support\Collection<string, App\Models\SocialAccount> $socialAccounts
+     */
+@endphp
+
 @extends('layouts.app')
 
 @section('title', 'Личные данные')
@@ -10,21 +16,43 @@
 
         <div class="">
             <div class="">ID: {{ auth()->id() }}</div>
-            <div class="">Yandex ID: {{ auth()->user()->yandex_id ?? '-' }}</div>
-            <div class="">
-                <a href="{{ route('web.auth.oauth.redirect', [App\Enums\Auth\OAuthProvider::Yandex]) }}">{{ 'Привязать к Яндекс' }}</a>
-            </div>
         </div>
 
         <div class="my-5 grid grid-cols-3 gap-5">
-            <div class="flex flex-col items-center relative p-5 border rounded-lg shadow-md">
-                <div class="p-3 flex flex-col">
-                    <div class="mb-4 text-md font-bold">{{ 'Яндекс' }}</div>
+            @foreach(App\Enums\Auth\OAuthProvider::cases() as $case)
+                @php
+                    $socialAccount = $socialAccounts->get($case->value);
+                @endphp
+                <div class="flex flex-col items-center justify-between relative p-5 border rounded-lg shadow-md">
+                    <div class="p-3 mb-1 flex flex-col items-center">
+                        <div class=" text-md font-bold">{{ $case->value }}</div>
+
+                        @if($socialAccount)
+                            <div class="">
+                                {{ $socialAccount->name }}
+                            </div>
+                        @endif
+                    </div>
+
+                    @if($socialAccount)
+                        <form action="{{ route('web.auth.oauth.disconnect', [$case]) }}" method="POST"
+                        class="w-full">
+                            @method('POST')
+                            @csrf
+
+                            <button type="submit"
+                                    class="p-3 text-sm border rounded-lg w-full text-center uppercase font-semibold"
+                            >
+                                {{ 'Удалить' }}
+                            </button>
+                        </form>
+                    @else
+                        <a href="{{ route('web.auth.oauth.redirect', [$case]) }}"
+                           class="p-3 text-sm border rounded-lg w-full text-center uppercase font-semibold"
+                        >{{ 'Подключиться' }}</a>
+                    @endif
                 </div>
-                <a href="{{ route('web.auth.oauth.redirect', [App\Enums\Auth\OAuthProvider::Yandex]) }}"
-                   class="p-3 text-sm border rounded-lg w-full text-center uppercase font-semibold"
-                >{{ 'Подключиться' }}</a>
-            </div>
+            @endforeach
         </div>
     </div>
 @endsection
