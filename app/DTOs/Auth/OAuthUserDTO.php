@@ -14,7 +14,7 @@ final class OAuthUserDTO implements Arrayable, Wireable
     public function __construct(
         public readonly OAuthProvider $provider,
         public readonly string        $id,
-        public readonly string        $email,
+        public readonly ?string       $email,
         public readonly ?string       $firstName = null,
         public readonly ?string       $lastName = null,
         public readonly ?string       $phone = null,
@@ -34,18 +34,21 @@ final class OAuthUserDTO implements Arrayable, Wireable
             );
         }
 
-        return match ($provider) {
-            OAuthProvider::Yandex => new OAuthUserDTO(
-                OAuthProvider::Yandex,
-                $user->getId(),
-                $user->getEmail(),
-                Arr::get($user->user, 'first_name', $user->getName()),
-                Arr::get($user->user, 'last_name'),
-                $phone,
-                Arr::get($user->user, 'sex'),
-                Carbon::createFromFormat('Y-m-d', Arr::get($user->user, 'birthday')),
-            ),
-        };
+        $birthday = Arr::get($user->user, 'birthday');
+        $birthday = $birthday
+            ? Carbon::createFromFormat('Y-m-d', $birthday)
+            : null;
+
+        return new OAuthUserDTO(
+            $provider,
+            $user->getId(),
+            $user->getEmail(),
+            Arr::get($user->user, 'first_name', $user->getName()),
+            Arr::get($user->user, 'last_name'),
+            $phone,
+            Arr::get($user->user, 'sex'),
+            $birthday,
+        );
     }
 
     public function toArray(): array

@@ -58,10 +58,25 @@ final class OAuthService
      */
     public function connect(User $user, OAuthUserDTO $data): User
     {
+        // 1. У текущего пользователя уже есть аккаунт соц. сети
+        // TODO: to repository
         $socialAccountAlreadyExists = $user->socialAccounts()->where(['provider' => $data->provider])->exists();
 
         if ($socialAccountAlreadyExists) {
             throw OAuthException::alreadyConnected($data->provider, $data->email);
+        }
+
+        // 2. Выбранный аккаунт соц. сети уже есть в системе
+        // TODO: to repository
+        $socialAccountAlreadyTaken = SocialAccount::query()
+            ->where([
+                'provider' => $data->provider,
+                'social_id' => $data->id,
+            ])
+            ->exists();
+
+        if ($socialAccountAlreadyTaken){
+            throw OAuthException::alreadyTaken($data->provider, $data->email);
         }
 
         $user->socialAccounts()->create($data->toArray());

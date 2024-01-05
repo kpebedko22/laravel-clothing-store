@@ -7,6 +7,7 @@ use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenNormalClasses;
 use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenPrivateMethods;
 use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenTraits;
 use NunoMaduro\PhpInsights\Domain\Metrics\Architecture\Classes;
+use PHP_CodeSniffer\Standards\Generic\Sniffs\Files\LineLengthSniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\Formatting\SpaceAfterNotSniff;
 use PHP_CodeSniffer\Standards\PSR12\Sniffs\Classes\ClassInstantiationSniff;
 use PhpCsFixer\Fixer\CastNotation\CastSpacesFixer;
@@ -111,6 +112,10 @@ return [
         FunctionDeclarationFixer::class => [
             'closure_function_spacing' => 'one',
             'closure_fn_spacing' => 'none',
+        ],
+        LineLengthSniff::class => [
+            'lineLimit' => 120,
+            'absoluteLineLimit' => 120,
         ],
     ],
 

@@ -8,6 +8,7 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use SocialiteProviders\Manager\SocialiteWasCalled;
+use SocialiteProviders\VKontakte\VKontakteExtendSocialite;
 use SocialiteProviders\Yandex\YandexExtendSocialite;
 
 class EventServiceProvider extends ServiceProvider
@@ -21,6 +22,7 @@ class EventServiceProvider extends ServiceProvider
         ],
         SocialiteWasCalled::class => [
             YandexExtendSocialite::class . '@handle',
+            VKontakteExtendSocialite::class . '@handle',
         ],
     ];
 

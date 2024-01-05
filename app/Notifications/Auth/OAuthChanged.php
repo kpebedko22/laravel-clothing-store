@@ -7,8 +7,6 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
-use Illuminate\Support\HtmlString;
-use Illuminate\Support\Str;
 
 final class OAuthChanged extends Notification implements ShouldQueue
 {
@@ -41,15 +39,14 @@ final class OAuthChanged extends Notification implements ShouldQueue
 
     public function toMail(object $notifiable): MailMessage
     {
-        $providerName = Str::headline($this->provider->value);
-        $appName = config('app.name');
+        $transPrefix = "notifications/auth/o-auth-changed.$this->type.mail";
+
+        $provider = $this->provider->getLabel();
+        $app = config('app.name');
 
         return (new MailMessage)
-            ->subject('Изменения в учетной записи')
-            ->greeting("Изменения в вашей учетной записи $appName")
-            ->lineIf($this->type === self::CONNECTED, "Аккаунт $providerName успешно привязан в $appName.")
-            ->lineIf($this->type === self::DISCONNECTED, "Аккаунт $providerName успешно отвязан в $appName.")
-            ->line('Если вы ничего не изменяли, рекомендуется поменять пароль.')
-            ->salutation(new HtmlString("С уважением,<br>$appName"));
+            ->subject(__("$transPrefix.subject", ['provider' => $provider, 'app' => $app]))
+            ->greeting(__("$transPrefix.greeting", ['provider' => $provider]))
+            ->line(__("$transPrefix.line", ['provider' => $provider, 'app' => $app]));
     }
 }

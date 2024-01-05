@@ -6,11 +6,11 @@ use App\DTOs\Auth\OAuthUserDTO;
 use App\Exceptions\Auth\OAuthException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Web\Auth\OAuthRequest;
+use App\Managers\Web\OAuthSessionManager;
 use App\Services\Web\Auth\OAuthService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Session;
 use Laravel\Socialite\Facades\Socialite;
 use Throwable;
 
@@ -57,12 +57,12 @@ final class OAuthController extends Controller
         $user = $this->service->auth($data);
 
         if ($user) {
-            Auth::guard('web')->login($user, true);
+            Auth::login($user, true);
 
             return redirect()->route('web.personal.index');
         }
 
-        Session::put("oauth.{$data->provider->value}", $data);
+        OAuthSessionManager::putData($data->provider, $data);
 
         return redirect()->route('web.auth.oauth.new', [$data->provider]);
     }
@@ -74,7 +74,7 @@ final class OAuthController extends Controller
     {
         $provider = $request->getProvider();
 
-        $data = Session::get("oauth.$provider->value");
+        $data = OAuthSessionManager::getData($provider);
 
         if (!$data) {
             throw OAuthException::default($provider);

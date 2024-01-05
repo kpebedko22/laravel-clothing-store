@@ -24,7 +24,8 @@ class Handler extends ExceptionHandler
             }
 
             $route = Auth::check()
-                ? 'web.personal.profile.index'
+                // TODO: web.personal.social_accounts or web.personal.social_accounts.index (?)
+                ? 'web.personal.profile'
                 : 'web.auth.index';
 
             return redirect()

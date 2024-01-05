@@ -14,13 +14,15 @@
 
             <hr>
 
-            <div class="flex my-4">
-                <a href="{{ route('web.auth.oauth.redirect', [App\Enums\Auth\OAuthProvider::Yandex]) }}"
-                   class="border border-orange-600 text-orange-600 p-3 rounded-lg hover:bg-orange-600 hover:text-white transition-all"
-                >
-                    {{ 'Войти через Яндекс' }}
-                </a>
-            </div>
+            @foreach(\App\Enums\Auth\OAuthProvider::cases() as $oAuthCase)
+                <div class="flex my-4">
+                    <a href="{{ route('web.auth.oauth.redirect', [$oAuthCase]) }}"
+                       class="border border-orange-600 text-orange-600 p-3 rounded-lg hover:bg-orange-600 hover:text-white transition-all"
+                    >
+                        {{ "Войти через $oAuthCase->value" }}
+                    </a>
+                </div>
+            @endforeach
 
             @php /** @var Illuminate\Support\ViewErrorBag $errors */ @endphp
             @if (($bag = $errors->getBag('oauth')) && $bag->isNotEmpty())

@@ -39,4 +39,14 @@ final class OAuthException extends RuntimeException
             ])
         );
     }
+
+    public static function alreadyTaken(OAuthProvider $provider, string $email): OAuthException
+    {
+        return new OAuthException(
+            __('exceptions/oauth.already_taken', [
+                'provider' => Str::headline($provider->value),
+                'email' => $email,
+            ])
+        );
+    }
 }
