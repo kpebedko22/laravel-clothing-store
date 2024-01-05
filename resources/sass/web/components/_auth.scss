@@ -1,0 +1,19 @@
+.oauth-divider {
+    margin: 0;
+    flex-shrink: 0;
+    display: flex;
+    white-space: nowrap;
+    text-align: center;
+    border: 0;
+
+    &__inner{
+        @apply mx-3;
+    }
+
+    &:after, &:before {
+        @apply border-t;
+        width: 100%;
+        content: "";
+        align-self: center;
+    }
+}

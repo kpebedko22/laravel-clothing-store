@@ -25,7 +25,11 @@
                 @endphp
                 <div class="flex flex-col items-center justify-between relative p-5 border rounded-lg shadow-md">
                     <div class="p-3 mb-1 flex flex-col items-center">
-                        <div class=" text-md font-bold">{{ $case->value }}</div>
+                        <div class="flex mb-2">
+                            <x-dynamic-component :component="$case->getIconBlade()" class="w-10 h-10"/>
+                        </div>
+
+                        <div class=" text-md font-bold">{{ $case->getLabel() }}</div>
 
                         @if($socialAccount)
                             <div class="">
@@ -36,7 +40,7 @@
 
                     @if($socialAccount)
                         <form action="{{ route('web.auth.oauth.disconnect', [$case]) }}" method="POST"
-                        class="w-full">
+                              class="w-full">
                             @method('POST')
                             @csrf
 

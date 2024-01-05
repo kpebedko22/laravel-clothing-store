@@ -21,4 +21,9 @@ enum OAuthProvider: string
     {
         return __("enums/auth/o-auth-provider.$this->value");
     }
+
+    public function getIconBlade(): string
+    {
+        return "web.oauth-icons.$this->value";
+    }
 }
