@@ -1,0 +1,19 @@
+.social-btn {
+    @apply p-3
+    text-sm text-center uppercase font-semibold
+    rounded-lg w-full
+    outline-none
+    transition-all select-none;
+
+    &--connect {
+        @apply bg-light border-light
+        hover:border-light-hover/50 hover:bg-light-hover/50
+        focus-visible:border-light-hover/50 focus-visible:bg-light-hover/50;
+    }
+
+    &--disconnect {
+        @apply bg-light-hover/70 border-light-hover/70
+        hover:border-light-hover/50 hover:bg-light-hover/50
+        focus-visible:border-light-hover/50 focus-visible:bg-light-hover/50;
+    }
+}

@@ -56,3 +56,9 @@ Breadcrumbs::for('web.personal.profile', function (BreadcrumbTrail $trail) {
     $trail->parent('web.personal.index');
     $trail->push('Личные данные', route('web.personal.profile'));
 });
+
+// Главная > Личный кабинет > Приложения и учётные записи
+Breadcrumbs::for('web.personal.social_accounts', function (BreadcrumbTrail $trail) {
+    $trail->parent('web.personal.index');
+    $trail->push('Приложения и учётные записи', route('web.personal.social_accounts'));
+});

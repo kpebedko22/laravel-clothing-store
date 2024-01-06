@@ -14,4 +14,7 @@ Route::prefix('personal')
 
         Route::get('profile', 'profile')
             ->name('profile');
+
+        Route::get('social-accounts', 'socialAccounts')
+            ->name('social_accounts');
     });

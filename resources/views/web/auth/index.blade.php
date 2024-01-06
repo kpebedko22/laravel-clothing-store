@@ -36,15 +36,13 @@
                 @foreach(\App\Enums\Auth\OAuthProvider::cases() as $oAuthCase)
                     <div class="flex my-4">
                         <a href="{{ route('web.auth.oauth.redirect', [$oAuthCase]) }}"
-                           class="border border-orange-600 text-orange-600 p-3 rounded-lg hover:bg-orange-600/10 hover:text-white transition-all"
+                           class="oauth-link"
                         >
                             <x-dynamic-component :component="$oAuthCase->getIconBlade()" class="w-10 h-10"/>
                         </a>
                     </div>
                 @endforeach
             </div>
-
-
         </div>
     </div>
 @endsection

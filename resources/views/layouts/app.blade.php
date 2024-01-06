@@ -14,18 +14,16 @@
 </head>
 
 <body>
-{{--  dark:bg-[#12100E] dark:bg-gradient-to-r dark:to-[#12100E] dark:from-[#2B4162] --}}
-{{--  bg-light/10 bg-gradient-to-r to-light/30 from-light/80 --}}
-{{-- background-image: radial-gradient(circle at top,#412ea5,#1f2937,#111827 100%); --}}
-<main class="">
+
+<div class="flex flex-col min-h-screen">
     @include('partials.header')
 
-    <div class="container xl:max-w-screen-xl mx-auto px-5">
+    <main class="container xl:max-w-screen-xl mx-auto px-5 flex-grow">
         @yield('content')
-    </div>
+    </main>
 
     @include('partials.footer')
-</main>
+</div>
 
 @stack('scripts')
 

@@ -18,6 +18,13 @@
                 <x-heroicon-o-cog-6-tooth class="personal-nav-card__icon"/>
             </a>
 
+            <a href="{{ route('web.personal.social_accounts') }}" class="personal-nav-card">
+                <span class="personal-nav-card__title">
+                    {{ 'Приложения и учётные записи' }}
+                </span>
+                <x-heroicon-o-share class="personal-nav-card__icon"/>
+            </a>
+
             <form action="{{ route('web.auth.logout') }}"
                   method="post"
             >

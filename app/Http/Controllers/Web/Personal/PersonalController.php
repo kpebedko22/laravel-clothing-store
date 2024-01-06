@@ -16,7 +16,12 @@ class PersonalController extends Controller
 
     public function profile(): View
     {
-        return view('web.personal.profile', [
+        return view('web.personal.profile');
+    }
+
+    public function socialAccounts(): View
+    {
+        return view('web.personal.social-accounts', [
             'socialAccounts' => (new SocialAccountRepository)->userSettings(Auth::user()),
         ]);
     }

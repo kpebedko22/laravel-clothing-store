@@ -1,5 +1,5 @@
 .personal-nav-card {
-    @apply p-5 pe-20 flex rounded-lg bg-light dark:bg-dark h-32 w-full shadow-md;
+    @apply p-5 pe-20 flex rounded-lg bg-light dark:bg-dark h-32 w-full shadow-md outline-none;
 
     overflow: hidden;
     position: relative;
@@ -35,7 +35,7 @@
         transition: .9s
     }
 
-    &:hover:before {
+    &:hover:before, &:focus-visible:before {
         right: -50%;
         bottom: -50%;
         width: 200%
