@@ -2,47 +2,50 @@
         tab: 'register',
         showErrors: false,
         selectTab(tab) {
-            this.showErrors = this.tab === tab;
+            if (this.tab !== tab) {
+                document.querySelectorAll('._errors').forEach(x => {
+                    x.remove();
+                });
+            }
+
             this.tab = tab;
         },
         submit() {
             this.tab === 'login'
                 ? $wire.existedAccount()
                 : $wire.newAccount();
-
-            this.showErrors = true;
         }
     }"
      class="mt-4"
 >
     <div class="grid grid-cols-2">
-        <div class="flex justify-center cursor-pointer hover:text-primary py-2 transition-all"
-             :class="{'text-primary border-b border-primary': tab === 'register'}"
+        <div class="nav-tab"
+             :class="{'nav-tab--selected ': tab === 'register'}"
              @click="selectTab('register')"
         >{{ 'Создание аккаунта' }}
         </div>
 
-        <div class="flex justify-center cursor-pointer hover:text-primary py-2 transition-all"
-             :class="{'text-primary border-b border-primary': tab === 'login'}"
+        <div class="nav-tab"
+             :class="{'nav-tab--selected ': tab === 'login'}"
              @click="selectTab('login')"
         >{{ 'Вход в аккаунт' }}
         </div>
     </div>
 
     <div class="mt-4 flex flex-col gap-3">
-        <div class="">
+        <div>
             <x-web.form.label for="email" label="{{ 'Email' }}"/>
             <x-web.form.input name="email"
                               placeholder="{{ 'Введите email' }}"
                               wire:model="email"
             />
-            <div x-show="showErrors">
+            <div class="_errors">
                 <x-web.form.error for="email"/>
             </div>
         </div>
 
-        <div class=""
-             x-show="tab === 'login'"
+        <div x-show="tab === 'login'"
+             x-cloak
         >
             <x-web.form.label for="password" label="{{ 'Пароль' }}"/>
             <x-web.form.input name="password"
@@ -50,7 +53,7 @@
                               placeholder="{{ 'Введите пароль' }}"
                               wire:model="password"
             />
-            <div x-show="showErrors">
+            <div class="_errors">
                 <x-web.form.error for="password"/>
             </div>
         </div>

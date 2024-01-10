@@ -8,5 +8,5 @@
     @endif
 
     <x-heroicon-o-heart
-        class="w-8 h-8 "/>
+        class="w-8 h-8"/>
 </a>

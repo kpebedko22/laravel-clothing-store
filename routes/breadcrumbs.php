@@ -16,6 +16,12 @@ Breadcrumbs::for('auth.index', function (BreadcrumbTrail $trail) {
     $trail->push('Авторизация', route('web.auth.index'));
 });
 
+// Главная > Авторизация > Привязка учётной записи
+Breadcrumbs::for('auth.oauth', function (BreadcrumbTrail $trail) {
+    $trail->parent('auth.index');
+    $trail->push('Привязка учётной записи');
+});
+
 // Главная > Каталог
 Breadcrumbs::for('catalog', function (BreadcrumbTrail $trail) {
     $trail->parent('index');

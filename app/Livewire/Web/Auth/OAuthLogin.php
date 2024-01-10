@@ -9,6 +9,7 @@ use App\Services\Web\Auth\OAuthService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use Livewire\Component;
 use Throwable;
 
@@ -39,13 +40,14 @@ class OAuthLogin extends Component
             $service = App::make(OAuthService::class);
 
             $user = $service->register(new OAuthRegisterDTO($this->email, $this->oAuthData));
-        } catch (Throwable $ex) {
-            $this->addError('email', "Ошибка регистрации. Попробуйте позже. {$ex->getMessage()}");
+        } catch (Throwable) {
+            $this->addError('email', __('exceptions/common.internal'));
 
             return;
         }
 
-        Auth::login($user);
+        Auth::login($user, true);
+        Session::invalidate();
 
         redirect(RouteServiceProvider::HOME);
     }

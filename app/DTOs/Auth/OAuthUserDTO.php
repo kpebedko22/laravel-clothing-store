@@ -76,6 +76,11 @@ final class OAuthUserDTO implements Arrayable, Wireable
 
     public static function fromLivewire($value): OAuthUserDTO
     {
+        $birthday = Arr::get($value, 'birthday');
+        $birthday = $birthday
+            ? Carbon::parse($birthday)
+            : null;
+
         return new OAuthUserDTO(
             OAuthProvider::from(Arr::get($value, 'provider')),
             Arr::get($value, 'id'),
@@ -84,7 +89,7 @@ final class OAuthUserDTO implements Arrayable, Wireable
             Arr::get($value, 'last_name'),
             Arr::get($value, 'phone'),
             Arr::get($value, 'gender'),
-            Carbon::parse(Arr::get($value, 'birthday')),
+            $birthday,
         );
     }
 }

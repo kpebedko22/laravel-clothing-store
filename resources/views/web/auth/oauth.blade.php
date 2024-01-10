@@ -5,7 +5,7 @@
 @section('title', 'Привязка учётной записи')
 
 @section('content')
-    {{ Breadcrumbs::render('auth.index') }}
+    {{ Breadcrumbs::render('auth.oauth') }}
 
     <div class="container md:max-w-screen-sm mx-auto">
         <div class="border rounded-lg bg-white dark:bg-dark dark:text-white shadow-lg p-8">

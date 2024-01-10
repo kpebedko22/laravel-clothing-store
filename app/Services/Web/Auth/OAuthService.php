@@ -40,8 +40,13 @@ final class OAuthService
         return DB::transaction(function () use ($data): User {
             $password = Str::password(config('auth.password_min_length'));
 
+            $userData = array_merge([
+                'password' => $password,
+                'email_verified_at' => now(),
+            ], $data->toArray());
+
             $user = User::query()
-                ->create(array_merge(['password' => $password], $data->toArray()));
+                ->create($userData);
 
             SocialAccount::query()
                 ->create(array_merge(['user_id' => $user->id], $data->oAuthData->toArray()));

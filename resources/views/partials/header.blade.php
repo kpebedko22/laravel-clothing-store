@@ -31,7 +31,7 @@
             <div class="grid grid-cols-3 divide-x">
                 <div class="px-5">
                     <a href="{{ route(Auth::guest() ? 'web.auth.index' : 'web.personal.index') }}">
-                        <x-heroicon-o-user class="w-8 h-8 text-gray-500 hover:text-gray-800"/>
+                        <x-heroicon-o-user class="w-8 h-8 text-dark dark:text-white"/>
                     </a>
                 </div>
                 <div class="px-5">
@@ -39,7 +39,7 @@
                 </div>
                 <div class="px-5">
                     <a href="">
-                        <x-heroicon-o-shopping-bag class="w-8 h-8 text-gray-500 hover:text-gray-800"/>
+                        <x-heroicon-o-shopping-bag class="w-8 h-8 text-dark dark:text-white"/>
                     </a>
                 </div>
             </div>

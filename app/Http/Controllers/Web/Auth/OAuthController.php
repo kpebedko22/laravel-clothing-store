@@ -11,6 +11,7 @@ use App\Services\Web\Auth\OAuthService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use Laravel\Socialite\Facades\Socialite;
 use Throwable;
 
@@ -51,13 +52,14 @@ final class OAuthController extends Controller
         if ($authorizedUser) {
             $this->service->connect($authorizedUser, $data);
 
-            return redirect()->route('web.personal.profile');
+            return redirect()->route('web.personal.social_accounts');
         }
 
         $user = $this->service->auth($data);
 
         if ($user) {
             Auth::login($user, true);
+            Session::invalidate();
 
             return redirect()->route('web.personal.index');
         }
@@ -92,6 +94,6 @@ final class OAuthController extends Controller
 
         $this->service->disconnect($user, $request->getProvider());
 
-        return redirect()->route('web.personal.profile');
+        return redirect()->route('web.personal.social_accounts');
     }
 }
