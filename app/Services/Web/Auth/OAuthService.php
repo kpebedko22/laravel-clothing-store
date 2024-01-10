@@ -75,7 +75,7 @@ final class OAuthService
             ])
             ->exists();
 
-        if ($socialAccountAlreadyTaken){
+        if ($socialAccountAlreadyTaken) {
             throw OAuthException::alreadyTaken($data->provider, $data->email);
         }
 

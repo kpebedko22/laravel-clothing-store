@@ -22,10 +22,11 @@ refresh:
 	php artisan optimize
 	php artisan migrate:fresh
 	php artisan db:seed
-	yes | php artisan ide-helper:models
-	./vendor/bin/pint
 
-	exit 0
+refresh-update: refresh
+	yes | php artisan ide-helper:models
+	php artisan insights --fix --flush-cache
+	./vendor/bin/pint
 
 migrate:
 	php artisan optimize
